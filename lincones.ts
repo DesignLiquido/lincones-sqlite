@@ -1,5 +1,7 @@
-export class Lincones {
+import { ILincones } from './interfaces/lincones-interface';
+
+export class Lincones implements ILincones {
     public iniciar() {
-        console.log("Lincones iniciado");
+        console.log('Lincones iniciado');
     }
 }
