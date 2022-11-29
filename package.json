@@ -1,0 +1,33 @@
+{
+    "name": "lincones-sqlite",
+    "description": "Implementação LinConEs para SQLite.",
+    "version": "0.0.0",
+    "author": "Leonel Sanches da Silva",
+    "contributors": [
+        {
+            "name": "Leonel Sanches da Silva",
+            "url": "https://www.linkedin.com/in/leonelsanchesdasilva/"
+        },
+        {
+            "name": "Italo Brito Brandão",
+            "url": "https://github.com/ItaloCobains"
+        }
+    ],
+    "license": "MIT",
+    "scripts": {
+        "empacotar": "rm -Rf ./dist && tsc && copyfiles -V ./README.md ./dist",
+        "publicar-npm": "npm publish --access public",
+        "lint": "eslint . --ext .ts",
+        "prettier-format": "prettier --config .prettierrc infraestrutura/*.ts interfaces/*.ts *.ts --write"
+    },
+    "devDependencies": {
+        "@tsconfig/node16": "^1.0.3",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
+        "eslint": "^8.28.0",
+        "typescript": "^4.9.3"
+    },
+    "dependencies": {
+        "prettier": "^2.8.0"
+    }
+}
