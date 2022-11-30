@@ -1,5 +1,4 @@
 import * as caminho from 'node:path';
-import * as sistemaArquivo from 'node:fs';
 
 import { ISqlite } from '../../interfaces';
 import sqlite3 from 'sqlite3';
@@ -47,6 +46,20 @@ export class Sqlite implements ISqlite {
 
     public iniciar(filename: string | null): void {
         this.abrir(filename);
-        this.fechar();
+    }
+
+    public executarSqlite(sql: string): void {
+        if (!this.bancoDeDadosInstancia) {
+            console.log(
+                'Não foi possível executar o SQLite. Você precisa inicializar o banco de dados.'
+            );
+            return null;
+        }
+
+        this.bancoDeDadosInstancia.run(sql, (erro: Error) => {
+            if (erro) {
+                console.log(erro.message);
+            }
+        });
     }
 }

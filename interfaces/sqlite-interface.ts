@@ -6,4 +6,5 @@ export interface ISqlite {
     caminhoTotalArquivo: string;
 
     iniciar(filename: string | null): void;
+    executarSqlite(sql: string): void;
 }
