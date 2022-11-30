@@ -1,4 +1,4 @@
-import { ILincones } from './interfaces/lincones-interface';
+import { ILincones } from './interfaces';
 
 export class Lincones implements ILincones {
     public iniciar() {
