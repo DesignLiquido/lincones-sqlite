@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Testes unitários",
+            "name": "Testes Lexador",
             "type": "node",
             "request": "launch",
             "runtimeArgs": [
@@ -13,6 +13,20 @@
                 "${workspaceRoot}/node_modules/jest/bin/jest.js",
                 "lexador.test.ts",
                 "--runInBand"
+            ],
+            "skipFiles": ["<node_internals>/**", "node_modules/**"],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Testes unitários",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/node_modules/jest/bin/jest.js",
+                "--runInBand",
+                "--coverage"
             ],
             "skipFiles": ["<node_internals>/**", "node_modules/**"],
             "console": "integratedTerminal",
