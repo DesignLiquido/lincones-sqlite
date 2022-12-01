@@ -9,5 +9,11 @@ export interface RetornoAvaliadorSintatico {
 
 export interface RetornoLexador {
     simbolos: SimboloInterface[];
-    erros: any[];
+    erros: ErroLexador[];
+}
+
+export interface ErroLexador {
+    linha: number;
+    caractere: string;
+    mensagem: string;
 }

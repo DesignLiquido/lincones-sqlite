@@ -1,8 +1,9 @@
-import { SimboloInterface } from "../interfaces";
-import { Simbolo } from "./simbolo";
+import { SimboloInterface } from '../interfaces';
+import { Simbolo } from './simbolo';
 
-import palavrasReservadas from "../palavras-reservadas";
-import tiposDeSimbolos from "../tipos-de-simbolos";
+import palavrasReservadas from '../palavras-reservadas';
+import tiposDeSimbolos from '../tipos-de-simbolos';
+import { RetornoLexador } from '../interfaces/retornos';
 
 export class Lexador {
     inicioSimbolo: number;
@@ -42,7 +43,7 @@ export class Lexador {
             'Ú',
             'ç',
             'Ç',
-            '_',
+            '_'
         ];
 
         return (
@@ -52,7 +53,7 @@ export class Lexador {
         );
     }
 
-    eAlfabetoOuDigito(caractere: any): boolean {
+    eAlfabetoOuDigito(caractere: string): boolean {
         return this.eDigito(caractere) || this.eAlfabeto(caractere);
     }
 
@@ -128,7 +129,7 @@ export class Lexador {
             this.erros.push({
                 linha: this.linha + 1,
                 caractere: this.simboloAnterior(),
-                mensagem: 'Texto não finalizado.',
+                mensagem: 'Texto não finalizado.'
             });
             return;
         }
@@ -146,12 +147,7 @@ export class Lexador {
             this.atual
         );
         this.simbolos.push(
-            new Simbolo(
-                tipo,
-                literal || texto,
-                literal,
-                this.linha + 1
-            )
+            new Simbolo(tipo, literal || texto, literal, this.linha + 1)
         );
     }
 
@@ -210,6 +206,10 @@ export class Lexador {
                 this.adicionarSimbolo(tiposDeSimbolos.IGUAL);
                 this.avancar();
                 break;
+            case '*':
+                this.adicionarSimbolo(tiposDeSimbolos.TUDO);
+                this.avancar();
+                break;
             case '<':
                 this.avancar();
                 if (this.simboloAtual() === '=') {
@@ -236,24 +236,29 @@ export class Lexador {
                     this.erros.push({
                         linha: this.linha + 1,
                         caractere: caractere,
-                        mensagem: 'Caractere inesperado.',
+                        mensagem: 'Caractere inesperado.'
                     });
                     this.avancar();
                 }
         }
     }
-    
-    mapear(codigo: string[]) {
+
+    mapear(codigo: string[]): RetornoLexador {
         this.inicioSimbolo = 0;
         this.atual = 0;
         this.linha = 0;
         this.codigo = codigo || [''];
+        this.simbolos = [];
+        this.erros = [];
 
         while (!this.eFinalDoCodigo()) {
             this.inicioSimbolo = this.atual;
             this.analisarToken();
         }
 
-        return null;
+        return {
+            simbolos: this.simbolos,
+            erros: this.erros
+        } as RetornoLexador;
     }
 }
