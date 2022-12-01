@@ -1,3 +1,10 @@
-export class Declaracao {
-    
-}
+export { Declaracao } from './declaracao';
+export { Inserir } from './inserir';
+export { Definir } from './definir';
+export { Excluir } from './excluir';
+export { Em } from './em';
+export { Atualizar } from './atualizar';
+export { De } from './de';
+export { Onde } from './onde';
+export { Selecionar } from './selecionar';
+export { Valores } from './valores';
