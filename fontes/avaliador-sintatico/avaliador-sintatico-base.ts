@@ -15,17 +15,17 @@ export abstract class AvaliadorSintaticoBase
         throw this.erro(this.simbolos[this.atual], mensagemDeErro);
     }
 
-    estaNofinal(): boolean {
+    estaNoFinal(): boolean {
         return this.atual === this.simbolos.length;
     }
 
     verificarTipoSimboloAtual(tipo: string): boolean {
-        if (this.estaNofinal()) return false;
+        if (this.estaNoFinal()) return false;
         return this.simbolos[this.atual].tipo === tipo;
     }
 
     avancarEDevolverAnterior(): SimboloInterface {
-        if (!this.estaNofinal()) this.atual++;
+        if (!this.estaNoFinal()) this.atual++;
         return this.simbolos[this.atual - 1];
     }
 
@@ -48,4 +48,6 @@ export abstract class AvaliadorSintaticoBase
         }
         return false;
     }
+
+    abstract declaracao(): void;
 }
