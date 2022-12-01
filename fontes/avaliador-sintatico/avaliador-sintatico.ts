@@ -1,12 +1,34 @@
 import { Declaracao } from '../declaracoes';
-import { AvaliadorSintaticoInterface, SimboloInterface } from '../interfaces';
+import { SimboloInterface } from '../interfaces';
 import {
     RetornoAvaliadorSintatico,
     RetornoLexador
 } from '../interfaces/retornos';
+import { AvaliadorSintaticoBase } from './avaliador-sintatico-base';
 import { ErroAvaliadorSintatico } from './erro-avaliador-sintatico';
 
-export class AvaliadorSintatico implements AvaliadorSintaticoInterface {
+export class AvaliadorSintatico implements AvaliadorSintaticoBase {
+    verificarSeSimboloAtualEIgualA(...argumentos: string[]): boolean {
+        throw new Error('Method not implemented.');
+    }
+    consumir(tipo: string, mensagemDeErro: string): SimboloInterface {
+        throw new Error('Method not implemented.');
+    }
+    estaNofinal(): boolean {
+        throw new Error('Method not implemented.');
+    }
+    verificarTipoSimboloAtual(tipo: string): boolean {
+        throw new Error('Method not implemented.');
+    }
+    avancarEDevolverAnterior(): SimboloInterface {
+        throw new Error('Method not implemented.');
+    }
+    erro(
+        simbolo: SimboloInterface,
+        mensagemDeErro: string
+    ): ErroAvaliadorSintatico {
+        throw new Error('Method not implemented.');
+    }
     erros: ErroAvaliadorSintatico[];
     bloco: number;
     atual: number;

@@ -7,4 +7,14 @@ export interface AvaliadorSintaticoInterface {
 
     atual: number;
     bloco: number;
+
+    consumir(tipo: string, mensagemDeErro: string): SimboloInterface;
+    estaNofinal(): boolean;
+    verificarTipoSimboloAtual(tipo: string): boolean;
+    avancarEDevolverAnterior(): SimboloInterface;
+    erro(
+        simbolo: SimboloInterface,
+        mensagemDeErro: string
+    ): ErroAvaliadorSintatico;
+    verificarSeSimboloAtualEIgualA(...argumentos: string[]): boolean;
 }
