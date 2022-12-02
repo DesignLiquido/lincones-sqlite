@@ -21,6 +21,9 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
+                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(
+                    38
+                );
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
         });

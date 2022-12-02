@@ -180,7 +180,8 @@ export class Lexador {
                 this.avancar();
                 break;
             case ';':
-                this.adicionarSimbolo(tiposDeSimbolos.PONTO_VIRGULA);
+                this.adicionarSimbolo(tiposDeSimbolos.PONTO_VIRGULA, ';');
+                this.linha++;
                 this.avancar();
                 break;
             case '"':
@@ -194,23 +195,23 @@ export class Lexador {
                 this.avancar();
                 break;
             case '(':
-                this.adicionarSimbolo(tiposDeSimbolos.PARENTESE_ESQUERDO);
+                this.adicionarSimbolo(tiposDeSimbolos.PARENTESE_ESQUERDO, '(');
                 this.avancar();
                 break;
             case ')':
-                this.adicionarSimbolo(tiposDeSimbolos.PARENTESE_DIREITO);
+                this.adicionarSimbolo(tiposDeSimbolos.PARENTESE_DIREITO, ')');
                 this.avancar();
                 break;
             case ',':
-                this.adicionarSimbolo(tiposDeSimbolos.VIRGULA);
+                this.adicionarSimbolo(tiposDeSimbolos.VIRGULA, ',');
                 this.avancar();
                 break;
             case '=':
-                this.adicionarSimbolo(tiposDeSimbolos.IGUAL);
+                this.adicionarSimbolo(tiposDeSimbolos.IGUAL, '=');
                 this.avancar();
                 break;
             case '*':
-                this.adicionarSimbolo(tiposDeSimbolos.TUDO);
+                this.adicionarSimbolo(tiposDeSimbolos.TUDO, '*');
                 this.avancar();
                 break;
             case '<':

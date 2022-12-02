@@ -1,11 +1,7 @@
 export { Declaracao } from './declaracao';
-export { Inserir } from './inserir';
-export { Definir } from './definir';
-export { Excluir } from './excluir';
-export { Em } from './em';
-export { Atualizar } from './atualizar';
-export { De } from './de';
-export { Onde } from './onde';
-export { Selecionar } from './selecionar';
-export { Valores } from './valores';
-export { Criar } from './criar';
+export { Identificador } from './identificador';
+export { ParenteseEsquerdo } from './parentese-esquerdo';
+export { ParenteseDireito } from './parentese-direito';
+export { Virgula } from './virgula';
+export { PontoEVirgula } from './ponto-e-virgula';
+export { Numero } from './numero';
