@@ -2,16 +2,15 @@ import { AvaliadorSintatico } from '../fontes/avaliador-sintatico';
 import { Lexador } from '../fontes/lexador';
 
 describe('Avaliador Sintático', () => {
-    it('Sucesso', () => {
-        expect(1).toBe(1);
+    let lexador: Lexador;
+    let avaliadorSintatico: AvaliadorSintatico;
+    
+    beforeEach(() => {
+        lexador = new Lexador();
+        avaliadorSintatico = new AvaliadorSintatico();
     });
+
     describe('analisar()', () => {
-        let lexador: Lexador;
-        let avaliadorSintatico: AvaliadorSintatico;
-        beforeEach(() => {
-            lexador = new Lexador();
-            avaliadorSintatico = new AvaliadorSintatico();
-        });
         describe('Cenário de sucesso', () => {
             it('Sucesso - Criar Tabela Clientes', () => {
                 const codigo = [
