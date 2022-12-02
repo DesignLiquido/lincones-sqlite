@@ -8,3 +8,4 @@ export { De } from './de';
 export { Onde } from './onde';
 export { Selecionar } from './selecionar';
 export { Valores } from './valores';
+export { Criar } from './criar';

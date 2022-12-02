@@ -177,7 +177,10 @@ export class Lexador {
             case '\0':
             case '\r':
             case '\t':
+                this.avancar();
+                break;
             case ';':
+                this.adicionarSimbolo(tiposDeSimbolos.PONTO_VIRGULA);
                 this.avancar();
                 break;
             case '"':

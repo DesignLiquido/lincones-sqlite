@@ -72,6 +72,14 @@ describe('Lexador', () => {
                     expect(resultado).toBeTruthy();
                     expect(resultado.simbolos).toHaveLength(4);
                 });
+                it('Sucesso - Criar Tabela Clientes', () => {
+                    const codigo = [
+                        'CRIAR TABELA clientes(id INTEIRO NAO NULO CHAVE PRIMARIA AUTOINCREMENTO, nome TEXTO(100) NAO NULO, idade INTEIRO NAO NULO, email TEXTO(255) NAO NULO, ativo LOGICO NAO NULO);'
+                    ];
+                    const resultado = lexador.mapear(codigo);
+                    expect(resultado).toBeTruthy();
+                    expect(resultado.simbolos).toHaveLength(39);
+                });
             });
         });
     });

@@ -50,4 +50,7 @@ export abstract class AvaliadorSintaticoBase
     }
 
     abstract declaracao(): void;
+    abstract sincronizar(): void;
+    abstract primario(): void;
+    abstract chamar(): void;
 }

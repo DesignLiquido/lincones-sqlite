@@ -19,5 +19,6 @@ export default {
     TEXTO: 'TEXTO',
     VALORES: 'VALORES',
     VIRGULA: 'VIRGULA',
-    TUDO: '*'
+    TUDO: 'TUDO',
+    PONTO_VIRGULA: 'PONTO_VIRGULA'
 };
