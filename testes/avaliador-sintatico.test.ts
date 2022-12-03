@@ -4,7 +4,7 @@ import { Lexador } from '../fontes/lexador';
 describe('Avaliador Sintático', () => {
     let lexador: Lexador;
     let avaliadorSintatico: AvaliadorSintatico;
-    
+
     beforeEach(() => {
         lexador = new Lexador();
         avaliadorSintatico = new AvaliadorSintatico();
@@ -20,9 +20,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(
-                    38
-                );
+                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(2);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
         });
