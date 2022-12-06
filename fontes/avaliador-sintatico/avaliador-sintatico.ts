@@ -1,47 +1,59 @@
 import { Criar, Declaracao } from '../declaracoes';
-import { SimboloInterface } from '../interfaces';
 import {
     RetornoAvaliadorSintatico,
     RetornoLexador
 } from '../interfaces/retornos';
 import tiposDeSimbolos from '../tipos-de-simbolos';
 import { AvaliadorSintaticoBase } from './avaliador-sintatico-base';
+import { InformacoesColuna } from './informacaoColuna';
 
 export class AvaliadorSintatico extends AvaliadorSintaticoBase {
-    public declaracaoIdenteificadorCriar(): boolean {
-        if (
-            this.simbolos[this.atual].lexema === 'CRIAR' &&
-            this.simbolos[this.atual++].tipo ===
-                tiposDeSimbolos.IDENTIFICADOR &&
-            this.simbolos[this.atual++].lexema === 'TABELA'
-        )
-            return true;
-        return false;
+    private logicaColunas(): InformacoesColuna {
+        
+
+        return null;
     }
 
-    public declaracao(): Declaracao {
-        switch (this.simbolos[this.atual].tipo) {
-            case tiposDeSimbolos.IDENTIFICADOR:
-                if (this.declaracaoIdenteificadorCriar()) {
-                    const numero = this.simbolos[this.atual].linha;
-                    const tabela = this.simbolos[this.atual++].lexema;
-                    const colunas: SimboloInterface[] = [];
+    private declaracaoCriar(): Criar {
+        this.avancar();
+        if (this.verificaSeLexemaSimboloAtual('TABELA')) {
+            this.avancar();
+            const nomeDaTabela = this.simbolos[this.atual].lexema;
+            this.avancar();
+            if (this.verificaSeLexemaSimboloAtual('(')) {
+                this.consumir(
+                    '(',
+                    'Esperado abrir parenteses após nome da tabela'
+                );
 
-                    this.atual = 3;
+                const colunas: InformacoesColuna[] = [];
 
-                    while (
-                        this.simbolos[this.atual].tipo !==
-                        tiposDeSimbolos.PONTO_VIRGULA
-                    ) {
-                        colunas.push(this.simbolos[this.atual]);
-                        this.avancarEDevolverAnterior();
-                    }
-
-                    return new Criar(numero, tabela, colunas);
+                while (!this.verificaSeLexemaSimboloAtual(')')) {
+                    this.logicaColunas();
+                    this.avancar();
                 }
-                break;
+
+                return new Criar(
+                    this.simbolos[this.atual].linha,
+                    nomeDaTabela,
+                    colunas
+                );
+            }
+        }
+    }
+
+    private avancar(): void {
+        this.avancar();
+        this.atual++;
+    }
+
+    private declaracao() {
+        switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.CRIAR:
+                return this.declaracaoCriar();
             default:
-                this.avancarEDevolverAnterior();
+                this.avancar();
+                return null;
         }
     }
 

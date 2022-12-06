@@ -2,6 +2,7 @@ import tiposDeSimbolos from './tipos-de-simbolos';
 
 export default {
     atualizar: tiposDeSimbolos.ATUALIZAR,
+    criar: tiposDeSimbolos.CRIAR,
     de: tiposDeSimbolos.DE,
     definir: tiposDeSimbolos.DEFINIR,
     em: tiposDeSimbolos.EM,
@@ -10,4 +11,4 @@ export default {
     onde: tiposDeSimbolos.ONDE,
     selecionar: tiposDeSimbolos.SELECIONAR,
     valores: tiposDeSimbolos.VALORES
-}
+};

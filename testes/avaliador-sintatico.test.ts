@@ -14,7 +14,7 @@ describe('Avaliador Sintático', () => {
         describe('Cenário de sucesso', () => {
             it('Sucesso - Criar Tabela Clientes', () => {
                 const codigo = [
-                    'CRIAR TABELA clientes(id INTEIRO NAO NULO CHAVEPRIMARIA AUTOINCREMENTO, nome TEXTO(100) NAO NULO, idade INTEIRO NAO NULO, email TEXTO(255) NAO NULO, ativo LOGICO NAO NULO);'
+                    'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NAO NULO, ATIVO LOGICO NAO NULO);'
                 ];
                 const resultadoLexador = lexador.mapear(codigo);
                 const resultadoAvaliadorSintatico =
@@ -22,6 +22,17 @@ describe('Avaliador Sintático', () => {
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
                 expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(2);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
+            });
+            it('Sucesso - Selecionar tabela Clientes', () => {
+                const codigo = [
+                    'SELECIONAR NOME, EMAIL DE clientes WHERE IDADE = 18;'
+                ];
+                const retornoLexador = lexador.mapear(codigo);
+                const retornoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(retornoLexador);
+                expect(retornoAvaliadorSintatico).toBeTruthy();
+                expect(retornoAvaliadorSintatico.declaracoes).toHaveLength(2);
+                expect(retornoAvaliadorSintatico.erros).toHaveLength(0);
             });
         });
     });

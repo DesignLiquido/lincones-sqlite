@@ -24,6 +24,11 @@ export abstract class AvaliadorSintaticoBase
         return this.simbolos[this.atual].tipo === tipo;
     }
 
+    verificaSeLexemaSimboloAtual(lexama: string): boolean {
+        if (this.estaNoFinal()) return false;
+        return this.simbolos[this.atual].lexema === lexama;
+    }
+
     avancarEDevolverAnterior(): SimboloInterface {
         if (!this.estaNoFinal()) this.atual++;
         return this.simbolos[this.atual - 1];
@@ -48,6 +53,4 @@ export abstract class AvaliadorSintaticoBase
         }
         return false;
     }
-
-    abstract declaracao(): void;
 }

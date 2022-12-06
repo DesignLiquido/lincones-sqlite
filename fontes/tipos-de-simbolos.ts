@@ -1,5 +1,6 @@
 export default {
     ATUALIZAR: 'ATUALIZAR',
+    CRIAR: 'CRIAR',
     DE: 'DE',
     DEFINIR: 'DEFINIR',
     EM: 'EM',
