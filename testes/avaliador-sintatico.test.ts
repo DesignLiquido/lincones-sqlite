@@ -5,13 +5,13 @@ describe('Avaliador Sintático', () => {
     let lexador: Lexador;
     let avaliadorSintatico: AvaliadorSintatico;
 
-    beforeEach(() => {
-        lexador = new Lexador();
-        avaliadorSintatico = new AvaliadorSintatico();
-    });
-
     describe('analisar()', () => {
         describe('Cenário de sucesso', () => {
+            beforeEach(() => {
+                lexador = new Lexador();
+                avaliadorSintatico = new AvaliadorSintatico();
+            });
+
             it('Sucesso - Criar Tabela Clientes', () => {
                 const codigo = [
                     'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NAO NULO, ATIVO LOGICO NAO NULO);'
@@ -44,7 +44,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(10);
+                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(1);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 

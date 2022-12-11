@@ -289,6 +289,8 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
                 return this.comandoAtualizar();
             case tiposDeSimbolos.CRIAR:
                 return this.comandoCriar();
+            case tiposDeSimbolos.INSERIR:
+                return this.comandoInserir();
             case tiposDeSimbolos.SELECIONAR:
                 return this.comandoSelecionar();
             default:
