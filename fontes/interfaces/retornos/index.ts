@@ -1,9 +1,9 @@
 import { SimboloInterface } from '..';
 import { ErroAvaliadorSintatico } from '../../avaliador-sintatico';
-import { Declaracao } from '../../declaracoes';
+import { Comando } from '../../comandos';
 
 export interface RetornoAvaliadorSintatico {
-    declaracoes: Declaracao[];
+    declaracoes: Comando[];
     erros: ErroAvaliadorSintatico[];
 }
 

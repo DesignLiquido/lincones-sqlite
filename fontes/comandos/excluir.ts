@@ -1,6 +1,6 @@
-import { Declaracao } from "./declaracao";
+import { Comando } from "./comando";
 
-export class Excluir extends Declaracao {
+export class Excluir extends Comando {
     tabela: string;
     condicoes: any[];
 

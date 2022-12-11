@@ -1,5 +1,1 @@
-import { Lincones } from "./lincones";
-
-const lincones = new Lincones();
-
-lincones.iniciar();
+export { Lincones } from "./fontes/lincones";

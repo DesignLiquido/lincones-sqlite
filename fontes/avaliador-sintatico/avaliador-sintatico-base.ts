@@ -44,13 +44,14 @@ export abstract class AvaliadorSintaticoBase
     }
 
     verificarSeSimboloAtualEIgualA(...argumentos: string[]): boolean {
-        for (const argumento of argumentos) {
-            const tipoAtual = argumentos[argumento];
+        for (let i = 0; i < argumentos.length; i++) {
+            const tipoAtual = argumentos[i];
             if (this.verificarTipoSimboloAtual(tipoAtual)) {
                 this.avancarEDevolverAnterior();
                 return true;
             }
         }
+
         return false;
     }
 }

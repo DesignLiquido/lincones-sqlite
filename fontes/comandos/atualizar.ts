@@ -1,6 +1,6 @@
-import { Declaracao } from "./declaracao";
+import { Comando } from "./comando";
 
-export class Atualizar extends Declaracao {
+export class Atualizar extends Comando {
     tabela: string;
     colunasEValores: any[];
     condicoes: any[];

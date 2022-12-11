@@ -1,4 +1,4 @@
-export class Declaracao {
+export class Comando {
     linha: number;
     assinaturaMetodo: string;
 

@@ -5,6 +5,7 @@ export default {
     criar: tiposDeSimbolos.CRIAR,
     de: tiposDeSimbolos.DE,
     definir: tiposDeSimbolos.DEFINIR,
+    e: tiposDeSimbolos.E,
     em: tiposDeSimbolos.EM,
     excluir: tiposDeSimbolos.EXCLUIR,
     inserir: tiposDeSimbolos.INSERIR,

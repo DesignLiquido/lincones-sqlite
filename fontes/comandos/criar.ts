@@ -1,7 +1,7 @@
 import { InformacoesColuna } from '../avaliador-sintatico';
-import { Declaracao } from './declaracao';
+import { Comando } from './comando';
 
-export class Criar extends Declaracao {
+export class Criar extends Comando {
     public tabela: string;
     public colunas: InformacoesColuna[];
     constructor(linha: number, tabela: string, colunas: InformacoesColuna[]) {

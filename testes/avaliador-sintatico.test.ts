@@ -23,9 +23,10 @@ describe('Avaliador Sintático', () => {
                 expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(2);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
+
             it('Sucesso - Selecionar tabela Clientes', () => {
                 const codigo = [
-                    'SELECIONAR NOME, EMAIL DE clientes WHERE IDADE = 18;'
+                    'SELECIONAR NOME, EMAIL DE clientes ONDE IDADE = 18;'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =

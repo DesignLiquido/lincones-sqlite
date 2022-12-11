@@ -1,6 +1,6 @@
-import { Declaracao } from "./declaracao";
+import { Comando } from "./comando";
 
-export class Inserir extends Declaracao {
+export class Inserir extends Comando {
     tabela: string;
     colunas: string[];
     valores: any[];

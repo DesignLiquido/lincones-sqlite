@@ -159,7 +159,8 @@ export class Lexador {
         const codigo: string = this.codigo[this.linha].substring(
             this.inicioSimbolo,
             this.atual
-        );
+        ).toLowerCase();
+        
         const tipo: string =
             codigo in palavrasReservadas
                 ? palavrasReservadas[codigo]

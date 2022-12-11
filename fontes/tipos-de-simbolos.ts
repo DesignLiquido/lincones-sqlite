@@ -3,6 +3,7 @@ export default {
     CRIAR: 'CRIAR',
     DE: 'DE',
     DEFINIR: 'DEFINIR',
+    E: 'E',
     EM: 'EM',
     EXCLUIR: 'EXCLUIR',
     IDENTIFICADOR: 'IDENTIFICADOR',
