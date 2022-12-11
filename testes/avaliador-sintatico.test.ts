@@ -24,6 +24,18 @@ describe('Avaliador Sintático', () => {
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
+            it('Sucesso - Atualizar Tabela Clientes', () => {
+                const codigo = [
+                    'ATUALIZAR clientes DEFINIR NOME = "Pernalonga" ONDE ID = 10;'
+                ];
+                const resultadoLexador = lexador.mapear(codigo);
+                const resultadoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(resultadoLexador);
+                expect(resultadoAvaliadorSintatico).toBeTruthy();
+                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(2);
+                expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
+            });
+
             it('Sucesso - Selecionar tabela Clientes', () => {
                 const codigo = [
                     'SELECIONAR NOME, EMAIL DE clientes ONDE IDADE = 18;'

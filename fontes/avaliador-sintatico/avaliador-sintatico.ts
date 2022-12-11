@@ -1,5 +1,5 @@
 import { Condicao } from '../construtos';
-import { Criar, Comando, Selecionar } from '../comandos';
+import { Criar, Comando, Selecionar, Atualizar } from '../comandos';
 import {
     RetornoAvaliadorSintatico,
     RetornoLexador
@@ -15,7 +15,44 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         }
     }
 
-    private declaracaoCriacaoColuna(): Coluna {
+    private comandoAtualizar(): Atualizar {
+        // Essa linha nunca deve retornar erro.
+        this.consumir(tiposDeSimbolos.ATUALIZAR, 'Esperado palavra reservada "ATUALIZAR".');
+
+        const nomeDaTabela = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
+            'Esperado identificador de nome de tabela após palavra reservada "ATUALIZAR".');
+
+        this.consumir(tiposDeSimbolos.DEFINIR, 'Esperado palavra reservada "DEFINIR". após palavra reservada "ATUALIZAR".');
+
+        // Relação de colunas para atualização
+        const colunasAtualizacao = []
+        do {
+            const esquerda = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado nome de coluna ou literal em descrição de atualização.`);
+            this.consumir(tiposDeSimbolos.IGUAL, 'Esperado operador válido após identificador em descrição de atualização.');
+
+            if (![
+                tiposDeSimbolos.IDENTIFICADOR, 
+                tiposDeSimbolos.NUMERO, 
+                tiposDeSimbolos.TEXTO
+            ].includes(this.simbolos[this.atual].tipo)) {
+                throw this.erro(this.simbolos[this.atual], `Esperado operador válido após identificador em descrição de atualização.`);
+            }
+
+            const direita = this.simbolos[this.atual];
+            this.avancar();
+            colunasAtualizacao.push({
+                esquerda,
+                direita
+            });
+        } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
+        
+        // Condições
+        const condicoes = this.logicaComumCondicoes('seleção');
+
+        return new Atualizar(-1, nomeDaTabela.lexema, colunasAtualizacao, condicoes);
+    }
+
+    private comandoCriacaoColuna(): Coluna {
         // Nome
         const nomeDaColuna = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
             'Esperado identificador de nome de coluna em comando de criação de tabela.');
@@ -87,18 +124,18 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         return new Coluna(nomeDaColuna.lexema, tipoColuna, tamanhoColuna, nulo, chavePrimaria, false);
     }
 
-    private declaracaoCriar(): Criar {
+    private comandoCriar(): Criar {
         // Essa linha nunca deve retornar erro.
         this.consumir(tiposDeSimbolos.CRIAR, 'Esperado palavra reservada "CRIAR".');
 
         switch (this.simbolos[this.atual].tipo) {
             case 'TABELA':
             default:
-                return this.declaracaoCriarTabela();
+                return this.comandoCriarTabela();
         }        
     }
 
-    private declaracaoCriarTabela() {
+    private comandoCriarTabela() {
         // Essa linha nunca deve retornar erro.
         this.consumir(tiposDeSimbolos.TABELA, 'Esperado palavra reservada "TABELA".');
 
@@ -111,7 +148,7 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         const colunas: Coluna[] = [];
 
         do {
-            colunas.push(this.declaracaoCriacaoColuna());
+            colunas.push(this.comandoCriacaoColuna());
         }
         while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
 
@@ -129,7 +166,43 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         );
     }
 
-    private declaracaoSelecionar() {
+    private logicaComumCondicoes(operacao: string): Condicao[] {
+        const condicoes: Condicao[] = [];
+        if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.ONDE)) {
+            do {
+                const esquerda = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado nome de coluna ou literal em condição de ${operacao}.`);
+                if (![
+                    tiposDeSimbolos.IGUAL, 
+                    tiposDeSimbolos.MAIOR, 
+                    tiposDeSimbolos.MAIOR_IGUAL, 
+                    tiposDeSimbolos.MENOR, 
+                    tiposDeSimbolos.MENOR_IGUAL
+                ].includes(this.simbolos[this.atual].tipo)) {
+                    throw this.erro(this.simbolos[this.atual], `Esperado operador válido após identificador em condição de ${operacao}.`);
+                }
+
+                const operador = this.simbolos[this.atual].tipo;
+                this.avancar();
+
+                if (![
+                    tiposDeSimbolos.IDENTIFICADOR, 
+                    tiposDeSimbolos.NUMERO, 
+                    tiposDeSimbolos.TEXTO
+                ].includes(this.simbolos[this.atual].tipo)) {
+                    throw this.erro(this.simbolos[this.atual], `Esperado operador válido após identificador em condição de ${operacao}.`);
+                }
+
+                const direita = this.simbolos[this.atual];
+                this.avancar();
+
+                condicoes.push(new Condicao(esquerda, operador, direita.literal || direita.lexema));
+            } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.E));
+        }
+
+        return condicoes;
+    }
+
+    private comandoSelecionar() {
         // Essa linha nunca deve retornar erro.
         this.consumir(tiposDeSimbolos.SELECIONAR, 'Esperado palavra reservada "SELECIONAR".');
 
@@ -150,37 +223,7 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         const nomeTabela = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 'Esperado nome de coluna ou literal em condição de seleção.');
 
         // Condições
-        const condicoes = [];
-        if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.ONDE)) {
-            do {
-                const esquerda = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 'Esperado nome de coluna ou literal em condição de seleção.');
-                if (![
-                    tiposDeSimbolos.IGUAL, 
-                    tiposDeSimbolos.MAIOR, 
-                    tiposDeSimbolos.MAIOR_IGUAL, 
-                    tiposDeSimbolos.MENOR, 
-                    tiposDeSimbolos.MENOR_IGUAL
-                ].includes(this.simbolos[this.atual].tipo)) {
-                    throw this.erro(this.simbolos[this.atual], 'Esperado operador válido após identificador em condição de seleção.');
-                }
-
-                const operador = this.simbolos[this.atual].tipo;
-                this.avancar();
-
-                if (![
-                    tiposDeSimbolos.IDENTIFICADOR, 
-                    tiposDeSimbolos.NUMERO, 
-                    tiposDeSimbolos.TEXTO
-                ].includes(this.simbolos[this.atual].tipo)) {
-                    throw this.erro(this.simbolos[this.atual], 'Esperado operador válido após identificador em condição de seleção.');
-                }
-
-                const direita = this.simbolos[this.atual];
-                this.avancar();
-
-                condicoes.push(new Condicao(esquerda, operador, direita.literal || direita.lexema));
-            } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.E));
-        }
+        const condicoes = this.logicaComumCondicoes('seleção');
 
         // Ponto-e-vírgula opcional.
         this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO_VIRGULA);
@@ -190,10 +233,12 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
 
     private declaracao() {
         switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.ATUALIZAR:
+                return this.comandoAtualizar();
             case tiposDeSimbolos.CRIAR:
-                return this.declaracaoCriar();
+                return this.comandoCriar();
             case tiposDeSimbolos.SELECIONAR:
-                return this.declaracaoSelecionar();
+                return this.comandoSelecionar();
             default:
                 this.avancar();
                 return null;
