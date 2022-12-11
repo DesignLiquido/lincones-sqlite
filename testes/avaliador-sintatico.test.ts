@@ -36,6 +36,18 @@ describe('Avaliador Sintático', () => {
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
+            it('Sucesso - Excluir em Tabela Clientes', () => {
+                const codigo = [
+                    'EXCLUIR clientes ONDE ID = 3;'
+                ];
+                const resultadoLexador = lexador.mapear(codigo);
+                const resultadoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(resultadoLexador);
+                expect(resultadoAvaliadorSintatico).toBeTruthy();
+                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(1);
+                expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
+            });
+
             it('Sucesso - Inserir em Tabela Clientes', () => {
                 const codigo = [
                     'INSERIR EM clientes (NOME) VALORES ("Pernalonga")'
