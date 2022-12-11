@@ -32,7 +32,7 @@ describe('Avaliador Sintático', () => {
                 const retornoAvaliadorSintatico =
                     avaliadorSintatico.analisar(retornoLexador);
                 expect(retornoAvaliadorSintatico).toBeTruthy();
-                expect(retornoAvaliadorSintatico.declaracoes).toHaveLength(2);
+                expect(retornoAvaliadorSintatico.declaracoes).toHaveLength(1);
                 expect(retornoAvaliadorSintatico.erros).toHaveLength(0);
             });
         });

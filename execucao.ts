@@ -6,6 +6,11 @@ import { Lexador } from "./fontes/lexador";
 const lexador = new Lexador();
 const avaliadorSintatico = new AvaliadorSintatico();
 const sentencaSelecao = 'SELECIONAR NOME, EMAIL DE clientes ONDE IDADE = 18;';
-const resultadoLexador = lexador.mapear([sentencaSelecao]);
-const teste = avaliadorSintatico.analisar(resultadoLexador);
+let resultadoLexador = lexador.mapear([sentencaSelecao]);
+let teste = avaliadorSintatico.analisar(resultadoLexador);
+console.log(teste);
+
+const sentencaCriacao = 'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NAO NULO, ATIVO LOGICO NAO NULO);';
+resultadoLexador = lexador.mapear([sentencaCriacao]);
+teste = avaliadorSintatico.analisar(resultadoLexador);
 console.log(teste);

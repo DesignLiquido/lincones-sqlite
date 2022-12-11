@@ -6,48 +6,132 @@ import {
 } from '../interfaces/retornos';
 import tiposDeSimbolos from '../tipos-de-simbolos';
 import { AvaliadorSintaticoBase } from './avaliador-sintatico-base';
-import { InformacoesColuna } from './informacaoColuna';
+import { Coluna } from '../construtos/coluna';
 
 export class AvaliadorSintatico extends AvaliadorSintaticoBase {
     private avancar(): void {
-        this.atual++;
+        if (!this.estaNoFinal()) {
+            this.atual++;
+        }
     }
 
-    private logicaColunas(): InformacoesColuna {
-        return null;
+    private declaracaoCriacaoColuna(): Coluna {
+        // Nome
+        const nomeDaColuna = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
+            'Esperado identificador de nome de coluna em comando de criação de tabela.');
+        
+        // Tipo de dados
+        let tipoColuna = null;
+        let tamanhoColuna = null;
+        switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.INTEIRO:
+                tipoColuna = tiposDeSimbolos.INTEIRO;
+                this.avancar();
+                break;
+            case tiposDeSimbolos.LOGICO:
+                tipoColuna = tiposDeSimbolos.LOGICO;
+                this.avancar();
+                break;
+            case tiposDeSimbolos.TEXTO:
+                tipoColuna = tiposDeSimbolos.TEXTO;
+                this.avancar();
+                if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PARENTESE_ESQUERDO)) {
+                    tamanhoColuna = this.consumir(tiposDeSimbolos.NUMERO, 
+                        'Esperado tamanho de texto de coluna em comando de criação de tabela.');
+                    this.consumir(tiposDeSimbolos.PARENTESE_DIREITO, 
+                        'Esperado parêntese direito após declaração de tamanho de coluna em comando de criação de tabela.');
+                }
+
+                break;
+            default:
+                throw this.erro(this.simbolos[this.atual], 
+                    'Esperado tipo de dados válido na definição de coluna em comando de criação de tabela.');
+        }
+
+        // Nulo/Não Nulo
+        let nulo = true;
+        if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.NAO, tiposDeSimbolos.NULO)) {
+            const simboloAnterior = this.simbolos[this.atual - 1];
+            switch (simboloAnterior.tipo) {
+                case tiposDeSimbolos.NAO:
+                    this.consumir(tiposDeSimbolos.NULO, 
+                        'Esperado palavra reservada "NULO" após palavra reservada "NÃO" em declaração de coluna em comando de criação de tabela.');
+                    nulo = false;
+                    break;
+                case tiposDeSimbolos.NULO:
+                default:
+                    break;
+            }
+        }
+
+        // Chave primária?
+        let chavePrimaria = false;
+        let autoIncremento = false;
+        if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.CHAVE)) {
+            switch (this.simbolos[this.atual].tipo) {
+                case tiposDeSimbolos.PRIMARIA:
+                    chavePrimaria = true;
+                    this.avancar();
+                    if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.AUTO)) {
+                        this.consumir(tiposDeSimbolos.INCREMENTO, 
+                            'Esperado palavra reservada "INCREMENTO" após palavra reservada "AUTO" em declaração de coluna em comando de criação de tabela.');
+                        autoIncremento = true;
+                    }
+                    break;
+                default:
+                    throw this.erro(this.simbolos[this.atual], 
+                        'Esperado palavra reservada "PRIMARIA" após palavra reservada "CHAVE" na definição de coluna em comando de criação de tabela.');
+            }
+        }
+
+        return new Coluna(nomeDaColuna.lexema, tipoColuna, tamanhoColuna, nulo, chavePrimaria, false);
     }
 
     private declaracaoCriar(): Criar {
-        this.avancar();
-        if (this.verificaSeLexemaSimboloAtual('TABELA')) {
-            this.avancar();
-            const nomeDaTabela = this.simbolos[this.atual].lexema;
-            this.avancar();
-            if (this.verificaSeLexemaSimboloAtual('(')) {
-                this.consumir(
-                    '(',
-                    'Esperado abrir parenteses após nome da tabela'
-                );
+        // Essa linha nunca deve retornar erro.
+        this.consumir(tiposDeSimbolos.CRIAR, 'Esperado palavra reservada "CRIAR".');
 
-                const colunas: InformacoesColuna[] = [];
+        switch (this.simbolos[this.atual].tipo) {
+            case 'TABELA':
+            default:
+                return this.declaracaoCriarTabela();
+        }        
+    }
 
-                while (!this.verificaSeLexemaSimboloAtual(')')) {
-                    this.logicaColunas();
-                    this.avancar();
-                }
+    private declaracaoCriarTabela() {
+        // Essa linha nunca deve retornar erro.
+        this.consumir(tiposDeSimbolos.TABELA, 'Esperado palavra reservada "TABELA".');
 
-                return new Criar(
-                    this.simbolos[this.atual].linha,
-                    nomeDaTabela,
-                    colunas
-                );
-            }
+        const nomeDaTabela = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
+            'Esperado identificador de nome de tabela após palavra reservada "TABELA".');
+
+        this.consumir(tiposDeSimbolos.PARENTESE_ESQUERDO, 
+            'Esperado abertura de parênteses após nome da tabela');
+
+        const colunas: Coluna[] = [];
+
+        do {
+            colunas.push(this.declaracaoCriacaoColuna());
         }
+        while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
+
+        this.consumir(tiposDeSimbolos.PARENTESE_DIREITO, 
+            'Esperado fechamento de parênteses após nome da tabela');
+
+        // Ponto-e-vírgula opcional.
+        // TODO: trazer isso mais tarde.
+        // this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO_VIRGULA);
+
+        return new Criar(
+            this.simbolos[this.atual].linha,
+            nomeDaTabela.lexema,
+            colunas
+        );
     }
 
     private declaracaoSelecionar() {
         // Essa linha nunca deve retornar erro.
-        this.consumir(tiposDeSimbolos.SELECIONAR, 'Esperado palavra reservada "SELECIONAR".')
+        this.consumir(tiposDeSimbolos.SELECIONAR, 'Esperado palavra reservada "SELECIONAR".');
 
         // Colunas
         let tudo = false;
@@ -93,10 +177,13 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
 
                 const direita = this.simbolos[this.atual];
                 this.avancar();
-                
+
                 condicoes.push(new Condicao(esquerda, operador, direita.literal || direita.lexema));
             } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.E));
         }
+
+        // Ponto-e-vírgula opcional.
+        this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO_VIRGULA);
 
         return new Selecionar(-1, nomeTabela.lexema, colunas, condicoes, tudo);
     }
