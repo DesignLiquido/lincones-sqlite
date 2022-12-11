@@ -105,3 +105,6 @@ dist
 
 # Yarn
 package-lock.json
+
+#SQLite
+*.db

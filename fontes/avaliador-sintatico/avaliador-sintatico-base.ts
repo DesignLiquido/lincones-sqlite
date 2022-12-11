@@ -24,6 +24,11 @@ export abstract class AvaliadorSintaticoBase
         return this.simbolos[this.atual].tipo === tipo;
     }
 
+    verificaSeLexemaSimboloAtual(lexama: string): boolean {
+        if (this.estaNoFinal()) return false;
+        return this.simbolos[this.atual].lexema === lexama;
+    }
+
     avancarEDevolverAnterior(): SimboloInterface {
         if (!this.estaNoFinal()) this.atual++;
         return this.simbolos[this.atual - 1];
@@ -39,15 +44,14 @@ export abstract class AvaliadorSintaticoBase
     }
 
     verificarSeSimboloAtualEIgualA(...argumentos: string[]): boolean {
-        for (const argumento of argumentos) {
-            const tipoAtual = argumentos[argumento];
+        for (let i = 0; i < argumentos.length; i++) {
+            const tipoAtual = argumentos[i];
             if (this.verificarTipoSimboloAtual(tipoAtual)) {
                 this.avancarEDevolverAnterior();
                 return true;
             }
         }
+
         return false;
     }
-
-    abstract declaracao(): void;
 }
