@@ -36,6 +36,18 @@ describe('Avaliador Sintático', () => {
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
+            it('Sucesso - Inserir em Tabela Clientes', () => {
+                const codigo = [
+                    'INSERIR EM clientes (NOME) VALORES ("Pernalonga")'
+                ];
+                const resultadoLexador = lexador.mapear(codigo);
+                const resultadoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(resultadoLexador);
+                expect(resultadoAvaliadorSintatico).toBeTruthy();
+                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(10);
+                expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
+            });
+
             it('Sucesso - Selecionar tabela Clientes', () => {
                 const codigo = [
                     'SELECIONAR NOME, EMAIL DE clientes ONDE IDADE = 18;'

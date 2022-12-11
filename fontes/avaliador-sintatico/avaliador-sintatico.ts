@@ -1,5 +1,5 @@
 import { Condicao } from '../construtos';
-import { Criar, Comando, Selecionar, Atualizar } from '../comandos';
+import { Criar, Comando, Selecionar, Atualizar, Inserir } from '../comandos';
 import {
     RetornoAvaliadorSintatico,
     RetornoLexador
@@ -164,6 +164,58 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
             nomeDaTabela.lexema,
             colunas
         );
+    }
+
+    private comandoInserir() {
+        // Essa linha nunca deve retornar erro.
+        const simboloInserir = this.consumir(tiposDeSimbolos.INSERIR, 'Esperado palavra reservada "INSERIR".');
+
+        this.consumir(tiposDeSimbolos.EM, 'Esperado palavra reservada "EM" após palavra reservada "INSERIR".');
+
+        const nomeDaTabela = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
+            'Esperado identificador de nome de tabela após palavra reservada "TABELA".');
+
+        // Colunas
+        this.consumir(tiposDeSimbolos.PARENTESE_ESQUERDO, 
+            'Esperado abertura de parênteses após identificador de nome de tabela em comando "INSERIR".');
+        const colunas = [];
+        do {
+            const nomeDaColuna = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
+                'Esperado identificador de nome de coluna após identificador de nome de tabela em comando "INSERIR".');
+            colunas.push(nomeDaColuna);
+        } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
+
+        this.consumir(tiposDeSimbolos.PARENTESE_DIREITO, 
+            'Esperado fechamento de parênteses após declaração de colunas em comando "INSERIR".');
+        this.consumir(tiposDeSimbolos.VALORES, 
+            'Esperado palavra reservada "VALORES" após primeiro fechamento de parênteses em comando "INSERIR".');
+        this.consumir(tiposDeSimbolos.PARENTESE_ESQUERDO, 
+            'Esperado abertura de parênteses após palavra reservada "VALORES" em comando "INSERIR".');
+
+        // Valores
+        const valores = [];
+        do {
+            if (![
+                tiposDeSimbolos.IDENTIFICADOR, 
+                tiposDeSimbolos.NUMERO, 
+                tiposDeSimbolos.TEXTO
+            ].includes(this.simbolos[this.atual].tipo)) {
+                throw this.erro(this.simbolos[this.atual], `Esperado valor válido para inserção em comando "INSERIR".`);
+            }
+
+            valores.push(this.simbolos[this.atual].literal);
+            this.avancar();
+        } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
+
+        this.consumir(tiposDeSimbolos.PARENTESE_DIREITO, 
+            'Esperado fechamento de parênteses após declaração de valores em comando "INSERIR".');
+
+        if (valores.length !== colunas.length) {
+            throw this.erro(simboloInserir, 
+                'Número de colunas não correspondente ao número de valores em comando "INSERIR".');
+        }
+
+        return new Inserir(-1, nomeDaTabela.lexema, colunas, valores);
     }
 
     private logicaComumCondicoes(operacao: string): Condicao[] {
