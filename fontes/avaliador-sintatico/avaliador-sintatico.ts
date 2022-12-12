@@ -196,7 +196,7 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         do {
             const nomeDaColuna = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
                 'Esperado identificador de nome de coluna após identificador de nome de tabela em comando "INSERIR".');
-            colunas.push(nomeDaColuna);
+            colunas.push(nomeDaColuna.lexema);
         } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
 
         this.consumir(tiposDeSimbolos.PARENTESE_DIREITO, 
@@ -217,7 +217,7 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
                 throw this.erro(this.simbolos[this.atual], `Esperado valor válido para inserção em comando "INSERIR".`);
             }
 
-            valores.push(this.simbolos[this.atual].literal);
+            valores.push(this.simbolos[this.atual]);
             this.avancar();
         } while (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.VIRGULA));
 
