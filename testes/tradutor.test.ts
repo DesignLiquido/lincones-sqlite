@@ -17,7 +17,7 @@ describe('Tradutor', () => {
 
             it('Atualizar', () => {
                 const codigo = [
-                    'ATUALIZAR clientes DEFINIR NOME = "Pernalonga" ONDE ID = 10;'
+                    'ATUALIZAR clientes DEFINIR NOME = "Pernalonga", IDADE = 18, ATIVO = VERDADEIRO, CASADO = false ONDE ID = 10;'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =
@@ -27,6 +27,14 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('UPDATE');
                 expect(resultado).toContain('clientes');
                 expect(resultado).toContain('SET');
+                expect(resultado).toContain('NOME');
+                expect(resultado).toContain('Pernalonga');
+                expect(resultado).toContain('IDADE');
+                expect(resultado).toContain('18');
+                expect(resultado).toContain('ATIVO');
+                expect(resultado).toContain('true');
+                expect(resultado).toContain('CASADO');
+                expect(resultado).toContain('false');
                 expect(resultado).toContain('WHERE');
                 expect(resultado).toContain('ID');
                 expect(resultado).toContain('=');
