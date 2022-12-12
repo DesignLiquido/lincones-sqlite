@@ -327,7 +327,7 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         }
 
         return {
-            declaracoes: declaracoes,
+            comandos: declaracoes,
             erros: this.erros
         } as RetornoAvaliadorSintatico;
     }

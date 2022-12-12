@@ -20,7 +20,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(2);
+                expect(resultadoAvaliadorSintatico.comandos).toHaveLength(2);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
@@ -32,7 +32,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(2);
+                expect(resultadoAvaliadorSintatico.comandos).toHaveLength(2);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
@@ -44,7 +44,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(1);
+                expect(resultadoAvaliadorSintatico.comandos).toHaveLength(1);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
@@ -56,7 +56,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.declaracoes).toHaveLength(1);
+                expect(resultadoAvaliadorSintatico.comandos).toHaveLength(1);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
@@ -68,7 +68,7 @@ describe('Avaliador Sintático', () => {
                 const retornoAvaliadorSintatico =
                     avaliadorSintatico.analisar(retornoLexador);
                 expect(retornoAvaliadorSintatico).toBeTruthy();
-                expect(retornoAvaliadorSintatico.declaracoes).toHaveLength(1);
+                expect(retornoAvaliadorSintatico.comandos).toHaveLength(1);
                 expect(retornoAvaliadorSintatico.erros).toHaveLength(0);
             });
         });

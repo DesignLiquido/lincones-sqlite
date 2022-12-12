@@ -3,7 +3,7 @@ import { ErroAvaliadorSintatico } from '../../avaliador-sintatico';
 import { Comando } from '../../comandos';
 
 export interface RetornoAvaliadorSintatico {
-    declaracoes: Comando[];
+    comandos: Comando[];
     erros: ErroAvaliadorSintatico[];
 }
 
