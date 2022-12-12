@@ -8,6 +8,7 @@ export default {
     E: 'E',
     EM: 'EM',
     EXCLUIR: 'EXCLUIR',
+    FALSO: 'FALSO',
     IDENTIFICADOR: 'IDENTIFICADOR',
     IGUAL: 'IGUAL',
     INCREMENTO: 'INCREMENTO',
@@ -31,5 +32,6 @@ export default {
     TEXTO: 'TEXTO',
     TUDO: 'TUDO',
     VALORES: 'VALORES',
+    VERDADEIRO: 'VERDADEIRO',
     VIRGULA: 'VIRGULA'
 };

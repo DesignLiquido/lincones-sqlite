@@ -10,6 +10,7 @@ export default {
     e: tiposDeSimbolos.E,
     em: tiposDeSimbolos.EM,
     excluir: tiposDeSimbolos.EXCLUIR,
+    falso: tiposDeSimbolos.FALSO,
     incremento: tiposDeSimbolos.INCREMENTO,
     inserir: tiposDeSimbolos.INSERIR,
     inteiro: tiposDeSimbolos.INTEIRO,
@@ -21,5 +22,6 @@ export default {
     selecionar: tiposDeSimbolos.SELECIONAR,
     tabela: tiposDeSimbolos.TABELA,
     texto: tiposDeSimbolos.TEXTO,
-    valores: tiposDeSimbolos.VALORES
+    valores: tiposDeSimbolos.VALORES,
+    verdadeiro: tiposDeSimbolos.VERDADEIRO
 };
