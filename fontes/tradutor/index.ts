@@ -1,4 +1,4 @@
-import { Comando, Inserir, Selecionar } from "../comandos";
+import { Atualizar, Comando, Inserir, Selecionar } from "../comandos";
 
 import tiposDeSimbolos from "../tipos-de-simbolos";
 
@@ -11,8 +11,26 @@ export class Tradutor {
         }
     }
 
-    traduzirComandoAtualizar() {
-        return '';
+    traduzirComandoAtualizar(comandoAtualizar: Atualizar) {
+        let resultado = 'UPDATE ';
+        resultado += `${comandoAtualizar.tabela}\nSET `
+
+        for (const valorAtualizacao of comandoAtualizar.colunasEValores) {
+            resultado += `${valorAtualizacao.esquerda.lexema} = ${valorAtualizacao.direita.lexema}, `;
+        }
+
+        resultado = resultado.slice(0, -2);
+        resultado += `\nWHERE `
+
+        if (comandoAtualizar.condicoes.length > 0) {
+            for (const condicao of comandoAtualizar.condicoes) {
+                resultado += `${condicao.esquerda.lexema} ${this.traduzirOperador(condicao.operador)} ${condicao.direita} AND `;
+            }
+
+            resultado = resultado.slice(0, -5);
+        }
+
+        return resultado;
     }
 
     traduzirComandoCriar() {
@@ -87,7 +105,7 @@ export class Tradutor {
     traduzir(comandos: Comando[]) {
         let resultado = '';
 
-        for (const comando of comandos) {
+        for (const comando of comandos.filter(c => c)) {
             resultado += `${this.dicionarioComandos[comando.constructor.name](comando)} \n`;
         }
 
