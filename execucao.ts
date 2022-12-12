@@ -14,3 +14,8 @@ const sentencaCriacao = 'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARI
 resultadoLexador = lexador.mapear([sentencaCriacao]);
 teste = avaliadorSintatico.analisar(resultadoLexador);
 console.log(teste);
+
+const sentencaInsercao = 'INSERIR EM clientes (NOME) VALORES ("Pernalonga")';
+resultadoLexador = lexador.mapear([sentencaInsercao]);
+teste = avaliadorSintatico.analisar(resultadoLexador);
+console.log(teste);
