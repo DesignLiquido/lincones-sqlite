@@ -1,5 +1,5 @@
 import { Condicao } from '../construtos';
-import { Criar, Comando, Selecionar, Atualizar, Inserir } from '../comandos';
+import { Criar, Comando, Selecionar, Atualizar, Inserir, Excluir } from '../comandos';
 import {
     RetornoAvaliadorSintatico,
     RetornoLexador
@@ -166,14 +166,28 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
         );
     }
 
-    private comandoInserir() {
+    private comandoExcluir() {
+        // Essa linha nunca deve retornar erro.
+        const simboloExcluir = this.consumir(tiposDeSimbolos.EXCLUIR, 'Esperado palavra reservada "EXCLUIR".');
+
+        const nomeDaTabela = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
+            'Esperado identificador de nome de tabela após palavra reservada "TABELA".');
+
+        const condicoes = this.logicaComumCondicoes('exclusão');
+
+        this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO_VIRGULA);
+
+        return new Excluir(-1, nomeDaTabela.lexema, condicoes);
+    }
+
+    private comandoInserir(): Inserir {
         // Essa linha nunca deve retornar erro.
         const simboloInserir = this.consumir(tiposDeSimbolos.INSERIR, 'Esperado palavra reservada "INSERIR".');
 
         this.consumir(tiposDeSimbolos.EM, 'Esperado palavra reservada "EM" após palavra reservada "INSERIR".');
 
         const nomeDaTabela = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 
-            'Esperado identificador de nome de tabela após palavra reservada "TABELA".');
+            'Esperado identificador de nome de tabela após palavra reservada "EM" em declaração "INSERIR".');
 
         // Colunas
         this.consumir(tiposDeSimbolos.PARENTESE_ESQUERDO, 
@@ -289,6 +303,8 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
                 return this.comandoAtualizar();
             case tiposDeSimbolos.CRIAR:
                 return this.comandoCriar();
+            case tiposDeSimbolos.EXCLUIR:
+                return this.comandoExcluir();
             case tiposDeSimbolos.INSERIR:
                 return this.comandoInserir();
             case tiposDeSimbolos.SELECIONAR:
