@@ -1,25 +1,27 @@
 import * as caminho from 'node:path';
 
-import { ISqlite } from '../../interfaces';
 import sqlite3 from 'sqlite3';
 
-export class Sqlite implements ISqlite {
+export class ClienteSQLite {
     bancoDeDadosInstancia: sqlite3.Database;
     readonly caminhoRaiz: string;
     caminhoTotalArquivo: string;
 
-    constructor() {
-        this.caminhoRaiz = __dirname;
+    // Segundo a documentação, o método new sqlite3.Database()
+    // pode receber 3 formas de filename
+    // caminho do arquivo exemplo: /tmp/banco.db
+    // ":memory:" para criar um banco de dados em memória
+    // null para criar um banco de dados temporário
+    constructor(origemDados: string | null) {
+        this.caminhoRaiz = process.cwd();
         this.caminhoTotalArquivo = null;
-    }
 
-    private async abrir(arquivo: string | null): Promise<void> {
-        if (arquivo !== ':memory:' && arquivo !== null) {
-            this.caminhoTotalArquivo = caminho.join(this.caminhoRaiz, arquivo);
+        if (origemDados !== ':memory:' && origemDados !== null) {
+            this.caminhoTotalArquivo = caminho.join(this.caminhoRaiz, origemDados);
         }
 
         this.bancoDeDadosInstancia = new sqlite3.Database(
-            arquivo,
+            origemDados,
             (erro: Error) => {
                 if (erro) {
                     console.error(erro.message);
@@ -29,6 +31,7 @@ export class Sqlite implements ISqlite {
             }
         );
     }
+    
     private async fechar(): Promise<void> {
         this.bancoDeDadosInstancia.close((erro: Error) => {
             if (erro) {
@@ -38,17 +41,7 @@ export class Sqlite implements ISqlite {
         });
     }
 
-    // Segundo a documentação, o método new sqlite3.Database()
-    // pode receber 3 formas de filename
-    // caminho do arquivo exemplo: /tmp/banco.db
-    // ":memory:" para criar um banco de dados em memória
-    // null para criar um banco de dados temporário
-
-    public iniciar(filename: string | null): void {
-        this.abrir(filename);
-    }
-
-    public executarSqlite(sql: string): void {
+    public executarComando(sql: string): void {
         if (!this.bancoDeDadosInstancia) {
             console.log(
                 'Não foi possível executar o SQLite. Você precisa inicializar o banco de dados.'
