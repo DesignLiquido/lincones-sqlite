@@ -15,6 +15,20 @@ describe('Tradutor', () => {
                 tradutor = new Tradutor();
             });
 
+            it('Atualizar', () => {
+                const codigo = [
+                    'ATUALIZAR clientes DEFINIR NOME = "Pernalonga" ONDE ID = 10;'
+                ];
+                const retornoLexador = lexador.mapear(codigo);
+                const retornoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(retornoLexador);
+                const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
+                expect(resultado).toBeTruthy();
+                expect(resultado).toContain('UPDATE');
+                expect(resultado).toContain('SET');
+                expect(resultado).toContain('WHERE');
+            });
+
             it('Inserir', () => {
                 const codigo = [
                     'INSERIR EM clientes (NOME) VALORES ("Pernalonga")'

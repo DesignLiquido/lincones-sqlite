@@ -1,4 +1,4 @@
-import { Comando, Inserir, Selecionar } from "../comandos";
+import { Atualizar, Comando, Inserir, Selecionar } from "../comandos";
 
 import tiposDeSimbolos from "../tipos-de-simbolos";
 
@@ -11,8 +11,24 @@ export class Tradutor {
         }
     }
 
-    traduzirComandoAtualizar() {
-        return '';
+    traduzirComandoAtualizar(comandoAtualizar: Atualizar) {
+        let resultado = 'UPDATE ';
+        resultado += `${comandoAtualizar.tabela}\nSET `
+
+        for (const valorAtualizacao of comandoAtualizar.colunasEValores) {
+            resultado += `${valorAtualizacao.esquerda} = ${valorAtualizacao.direita}, `;
+        }
+
+        resultado = resultado.slice(0, -2);
+        resultado += `\nWHERE `
+
+        if (comandoAtualizar.condicoes.length > 0) {
+            for (const condicao in comandoAtualizar.condicoes) {
+                // TODO @Samuel: Terminar
+            }
+        }
+
+        return resultado;
     }
 
     traduzirComandoCriar() {
