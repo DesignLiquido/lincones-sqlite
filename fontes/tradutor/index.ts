@@ -16,16 +16,18 @@ export class Tradutor {
         resultado += `${comandoAtualizar.tabela}\nSET `
 
         for (const valorAtualizacao of comandoAtualizar.colunasEValores) {
-            resultado += `${valorAtualizacao.esquerda} = ${valorAtualizacao.direita}, `;
+            resultado += `${valorAtualizacao.esquerda.lexema} = ${valorAtualizacao.direita.lexema}, `;
         }
 
         resultado = resultado.slice(0, -2);
         resultado += `\nWHERE `
 
         if (comandoAtualizar.condicoes.length > 0) {
-            for (const condicao in comandoAtualizar.condicoes) {
-                // TODO @Samuel: Terminar
+            for (const condicao of comandoAtualizar.condicoes) {
+                resultado += `${condicao.esquerda.lexema} ${this.traduzirOperador(condicao.operador)} ${condicao.direita} AND `;
             }
+
+            resultado = resultado.slice(0, -4);
         }
 
         return resultado;
