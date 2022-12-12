@@ -8,6 +8,10 @@ export class Tradutor {
         switch (operador) {
             case tiposDeSimbolos.IGUAL:
                 return '=';
+            case tiposDeSimbolos.VERDADEIRO:
+                return true;
+            case tiposDeSimbolos.FALSO:
+                return false;
         }
     }
 
@@ -16,6 +20,14 @@ export class Tradutor {
         resultado += `${comandoAtualizar.tabela}\nSET `
 
         for (const valorAtualizacao of comandoAtualizar.colunasEValores) {
+            if(valorAtualizacao.direita.tipo === tiposDeSimbolos.TEXTO){
+                resultado += `${valorAtualizacao.esquerda.lexema} = '${valorAtualizacao.direita.lexema}', `
+                continue;
+            }
+            if([tiposDeSimbolos.VERDADEIRO, tiposDeSimbolos.FALSO].includes(valorAtualizacao.direita.tipo)){
+                resultado += `${valorAtualizacao.esquerda.lexema} = ${this.traduzirOperador(valorAtualizacao.direita.tipo)}, `;
+                continue;
+            }
             resultado += `${valorAtualizacao.esquerda.lexema} = ${valorAtualizacao.direita.lexema}, `;
         }
 

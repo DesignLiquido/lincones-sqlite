@@ -33,7 +33,9 @@ export class AvaliadorSintatico extends AvaliadorSintaticoBase {
             if (![
                 tiposDeSimbolos.IDENTIFICADOR, 
                 tiposDeSimbolos.NUMERO, 
-                tiposDeSimbolos.TEXTO
+                tiposDeSimbolos.TEXTO,
+                tiposDeSimbolos.VERDADEIRO,
+                tiposDeSimbolos.FALSO
             ].includes(this.simbolos[this.atual].tipo)) {
                 throw this.erro(this.simbolos[this.atual], `Esperado operador válido após identificador em descrição de atualização.`);
             }
