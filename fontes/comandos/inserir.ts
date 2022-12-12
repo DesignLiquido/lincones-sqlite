@@ -1,9 +1,10 @@
+import { SimboloInterface } from "../interfaces";
 import { Comando } from "./comando";
 
 export class Inserir extends Comando {
     tabela: string;
     colunas: string[];
-    valores: any[];
+    valores: SimboloInterface[];
 
     constructor(linha: number, tabela: string, colunas: string[], valores: any[]) {
         super(linha);

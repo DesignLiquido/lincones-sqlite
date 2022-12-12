@@ -1,4 +1,4 @@
-import { Comando, Selecionar } from "../comandos";
+import { Comando, Inserir, Selecionar } from "../comandos";
 
 import tiposDeSimbolos from "../tipos-de-simbolos";
 
@@ -23,8 +23,29 @@ export class Tradutor {
         return '';
     }
 
-    traduzirComandoInserir() {
-        return '';
+    traduzirComandoInserir(comandoInserir: Inserir) {
+        let resultado = 'INSERT INTO ';
+        resultado += `${comandoInserir.tabela} (`;
+
+        for (const coluna of comandoInserir.colunas) {
+            resultado += `${coluna}, `;
+        }
+
+        resultado = resultado.slice(0, -2);
+        resultado += `)\nVALUES (`;
+
+        for (const valor of comandoInserir.valores) {
+            if (typeof valor.literal === "string") {
+                resultado += `"${valor.literal}", `;
+            } else {
+                resultado += `${valor.literal}, `;
+            }
+        }
+
+        resultado = resultado.slice(0, -2);
+        resultado += `)`;
+
+        return resultado;
     }
 
     traduzirComandoSelecionar(comandoSelecionar: Selecionar) {
