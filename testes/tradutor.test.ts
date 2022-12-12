@@ -25,8 +25,12 @@ describe('Tradutor', () => {
                 const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
                 expect(resultado).toBeTruthy();
                 expect(resultado).toContain('UPDATE');
+                expect(resultado).toContain('clientes');
                 expect(resultado).toContain('SET');
                 expect(resultado).toContain('WHERE');
+                expect(resultado).toContain('ID');
+                expect(resultado).toContain('=');
+                expect(resultado).toContain('10');
             });
 
             it('Inserir', () => {
