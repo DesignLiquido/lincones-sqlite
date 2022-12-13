@@ -79,7 +79,7 @@ describe('Tradutor', () => {
 
             it('Selecionar Tudo', () => {
                 const codigo = [
-                    'SELECIONAR TUDO DE clientes'
+                    'SELECIONAR * DE clientes'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =
