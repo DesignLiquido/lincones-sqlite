@@ -1,0 +1,4 @@
+[submodule "comum"]
+	path = comum
+	url = https://github.com/DesignLiquido/lincones-js
+	branch = principal
