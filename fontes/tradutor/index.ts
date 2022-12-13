@@ -1,8 +1,8 @@
-import { Coluna } from "../avaliador-sintatico";
-import { Atualizar, Comando, Criar, Excluir, Inserir, Selecionar } from "../comandos";
-import { Simbolo } from "../lexador/simbolo";
+import { Coluna } from "../../comum/fontes/avaliador-sintatico"
+import { Atualizar, Comando, Criar, Excluir, Inserir, Selecionar } from "../../comum/fontes/comandos";
+import { Simbolo } from "../../comum/fontes/lexador/simbolo";
 
-import tiposDeSimbolos from "../tipos-de-simbolos";
+import tiposDeSimbolos from "../../comum/fontes/tipos-de-simbolos";
 
 export class Tradutor {
 

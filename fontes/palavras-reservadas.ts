@@ -1,4 +1,4 @@
-import tiposDeSimbolos from './tipos-de-simbolos';
+import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos';
 
 export default {
     atualizar: tiposDeSimbolos.ATUALIZAR,
