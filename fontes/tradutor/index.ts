@@ -1,4 +1,4 @@
-import { Atualizar, Comando, Inserir, Selecionar } from "../comandos";
+import { Atualizar, Comando, Criar, Excluir, Inserir, Selecionar } from "../comandos";
 
 import tiposDeSimbolos from "../tipos-de-simbolos";
 
@@ -32,9 +32,10 @@ export class Tradutor {
         }
 
         resultado = resultado.slice(0, -2);
-        resultado += `\nWHERE `
 
         if (comandoAtualizar.condicoes.length > 0) {
+            resultado += `\nWHERE `
+
             for (const condicao of comandoAtualizar.condicoes) {
                 resultado += `${condicao.esquerda.lexema} ${this.traduzirOperador(condicao.operador)} ${condicao.direita} AND `;
             }
@@ -45,12 +46,29 @@ export class Tradutor {
         return resultado;
     }
 
-    traduzirComandoCriar() {
+    traduzirComandoCriar(comandoCriar: Criar) {
+
+
         return '';
     }
 
-    traduzirComandoExcluir() {
-        return '';
+    traduzirComandoExcluir(comandoExcluir: Excluir) {
+        let resultado = 'DELETE FROM ';
+        resultado += `${comandoExcluir.tabela} `
+
+        resultado = resultado.slice(0, -1);
+
+        if (comandoExcluir.condicoes.length > 0) {
+            resultado += `\nWHERE `
+
+            for (const condicao of comandoExcluir.condicoes) {
+                resultado += `${condicao.esquerda.lexema} ${this.traduzirOperador(condicao.operador)} ${condicao.direita} AND `;
+            }
+
+            resultado = resultado.slice(0, -5);
+        }
+
+        return resultado;
     }
 
     traduzirComandoInserir(comandoInserir: Inserir) {
