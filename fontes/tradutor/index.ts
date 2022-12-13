@@ -13,7 +13,7 @@ export class Tradutor {
             case tiposDeSimbolos.VERDADEIRO:
                 return true;
             case tiposDeSimbolos.FALSO:
-                return false;         
+                return false;
         }
     }
 
