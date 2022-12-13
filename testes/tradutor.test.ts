@@ -85,6 +85,7 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('SELECT');
                 expect(resultado).toContain('*');
                 expect(resultado).toContain('FROM');
+                expect(resultado).toContain('clientes');
             });
 
             it('Selecionar Colunas', () => {
