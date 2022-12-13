@@ -61,7 +61,7 @@ describe('Tradutor', () => {
 
             it('Inserir', () => {
                 const codigo = [
-                    'INSERIR EM clientes (NOME) VALORES ("Pernalonga")'
+                    'INSERIR EM clientes (NOME, IDADE, ATIVO, CASADO) VALORES ("Pernalonga", 18, verdadeiro, falso)'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =
@@ -71,6 +71,10 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('INSERT');
                 expect(resultado).toContain('INTO');
                 expect(resultado).toContain('VALUES');
+                expect(resultado).toContain('Pernalonga');
+                expect(resultado).toContain('18');
+                expect(resultado).toContain('true');
+                expect(resultado).toContain('false');
             });
 
             it('Selecionar Tudo', () => {
@@ -101,6 +105,20 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('FROM');
                 expect(resultado).toContain('WHERE');
             });
+
+            // it('Criar', () => {
+            //     const codigo = [
+            //         'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NAO NULO, ATIVO LOGICO NAO NULO);'
+            //     ];
+            //     const retornoLexador = lexador.mapear(codigo);
+            //     const retornoAvaliadorSintatico =
+            //         avaliadorSintatico.analisar(retornoLexador);
+            //     const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
+            //     expect(resultado).toBeTruthy();
+            //     expect(resultado).toContain('SELECT');
+            //     expect(resultado).toContain('FROM');
+            //     expect(resultado).toContain('WHERE');
+            // });
         });
     });
 });
