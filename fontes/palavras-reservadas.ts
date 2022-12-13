@@ -22,6 +22,7 @@ export default {
     selecionar: tiposDeSimbolos.SELECIONAR,
     tabela: tiposDeSimbolos.TABELA,
     texto: tiposDeSimbolos.TEXTO,
+    tudo: tiposDeSimbolos.TUDO,
     valores: tiposDeSimbolos.VALORES,
     verdadeiro: tiposDeSimbolos.VERDADEIRO
 };

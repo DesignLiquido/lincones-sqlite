@@ -73,7 +73,21 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('VALUES');
             });
 
-            it('Selecionar', () => {
+            it('Selecionar Tudo', () => {
+                const codigo = [
+                    'SELECIONAR TUDO DE clientes'
+                ];
+                const retornoLexador = lexador.mapear(codigo);
+                const retornoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(retornoLexador);
+                const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
+                expect(resultado).toBeTruthy();
+                expect(resultado).toContain('SELECT');
+                expect(resultado).toContain('*');
+                expect(resultado).toContain('FROM');
+            });
+
+            it('Selecionar Colunas', () => {
                 const codigo = [
                     'SELECIONAR NOME, EMAIL DE clientes ONDE IDADE = 18;'
                 ];
