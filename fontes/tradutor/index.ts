@@ -1,4 +1,6 @@
+import { Coluna } from "../avaliador-sintatico";
 import { Atualizar, Comando, Criar, Excluir, Inserir, Selecionar } from "../comandos";
+import { Simbolo } from "../lexador/simbolo";
 
 import tiposDeSimbolos from "../tipos-de-simbolos";
 
@@ -11,7 +13,7 @@ export class Tradutor {
             case tiposDeSimbolos.VERDADEIRO:
                 return true;
             case tiposDeSimbolos.FALSO:
-                return false;
+                return false;         
         }
     }
 
@@ -46,10 +48,38 @@ export class Tradutor {
         return resultado;
     }
 
+    traduzirColuna(coluna: Coluna) {
+        let traduzir = "";
+        if(coluna.chavePrimaria)
+            traduzir += "PRIMARY KEY "
+        if(tiposDeSimbolos.INTEIRO === coluna.tipo){
+            traduzir += `INTEGER `;
+        }
+        else if(tiposDeSimbolos.TEXTO === coluna.tipo){
+            const simbolo = coluna.tamanho as Simbolo
+            traduzir += `VARCHAR(${simbolo.literal}) `;
+        }
+        else if(tiposDeSimbolos.LOGICO === coluna.tipo)
+            traduzir += "BOOLEAN "
+        if(coluna.nulo)
+            traduzir += "NULL"
+        else 
+            traduzir += "NOT NULL"
+
+        return traduzir;
+    }
+
     traduzirComandoCriar(comandoCriar: Criar) {
+        let resultado = `CREATE TABLE ${comandoCriar.tabela} (`
+        
+        for (const coluna of comandoCriar.colunas) {
+            resultado += `${coluna.nomeColuna} ${this.traduzirColuna(coluna)}, `;
+        }
 
+        resultado = resultado.slice(0, -2);
+        resultado += ")"
 
-        return '';
+        return resultado;
     }
 
     traduzirComandoExcluir(comandoExcluir: Excluir) {

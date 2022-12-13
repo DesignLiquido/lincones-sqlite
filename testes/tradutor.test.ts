@@ -106,19 +106,24 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('WHERE');
             });
 
-            // it('Criar', () => {
-            //     const codigo = [
-            //         'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NAO NULO, ATIVO LOGICO NAO NULO);'
-            //     ];
-            //     const retornoLexador = lexador.mapear(codigo);
-            //     const retornoAvaliadorSintatico =
-            //         avaliadorSintatico.analisar(retornoLexador);
-            //     const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
-            //     expect(resultado).toBeTruthy();
-            //     expect(resultado).toContain('SELECT');
-            //     expect(resultado).toContain('FROM');
-            //     expect(resultado).toContain('WHERE');
-            // });
+            it('Criar', () => {
+                const codigo = [
+                    'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NULO, ATIVO LOGICO NAO NULO);'
+                ];
+                const retornoLexador = lexador.mapear(codigo);
+                const retornoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(retornoLexador);
+                const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
+                expect(resultado).toBeTruthy();
+                expect(resultado).toContain('CREATE');
+                expect(resultado).toContain('TABLE');
+                expect(resultado).toContain('clientes');
+                expect(resultado).toContain('PRIMARY KEY');
+                expect(resultado).toContain('INTEGER');
+                expect(resultado).toContain('NOT NULL');
+                expect(resultado).toContain('BOOLEAN');
+                expect(resultado).toContain('VARCHAR');
+            });
         });
     });
 });
