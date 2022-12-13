@@ -15,6 +15,24 @@ describe('Tradutor', () => {
                 tradutor = new Tradutor();
             });
 
+            it('Excluir', () => {
+                const codigo = [
+                    'EXCLUIR clientes ONDE nome = "Donald"'
+                ];
+                const retornoLexador = lexador.mapear(codigo);
+                const retornoAvaliadorSintatico =
+                    avaliadorSintatico.analisar(retornoLexador);
+                const resultado = tradutor.traduzir(retornoAvaliadorSintatico.comandos);
+                expect(resultado).toBeTruthy();
+                expect(resultado).toContain('DELETE');
+                expect(resultado).toContain('FROM');
+                expect(resultado).toContain('clientes');
+                expect(resultado).toContain('WHERE');
+                expect(resultado).toContain('nome');
+                expect(resultado).toContain('=');
+                expect(resultado).toContain('Donald');
+            });
+
             it('Atualizar', () => {
                 const codigo = [
                     'ATUALIZAR clientes DEFINIR NOME = "Pernalonga", IDADE = 18, ATIVO = VERDADEIRO, CASADO = FALSO ONDE ID = 10;'
