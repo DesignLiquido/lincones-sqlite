@@ -122,7 +122,7 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('INTEGER');
                 expect(resultado).toContain('NOT NULL');
                 expect(resultado).toContain('BOOLEAN');
-                // expect(resultado).toContain('VARCHAR');
+                expect(resultado).toContain('VARCHAR');
             });
         });
     });

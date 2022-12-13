@@ -56,8 +56,8 @@ export class Tradutor {
             traduzir += `INTEGER `;
         }
         else if(tiposDeSimbolos.TEXTO === coluna.tipo){
-            // const simbolo = coluna.tamanho as Simbolo
-            // traduzir += `VARCHAR(${simbolo.literal}) `;
+            const simbolo = coluna.tamanho as Simbolo
+            traduzir += `VARCHAR(${simbolo.literal}) `;
         }
         else if(tiposDeSimbolos.LOGICO === coluna.tipo)
             traduzir += "BOOLEAN "
