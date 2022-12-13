@@ -17,6 +17,7 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '16'
+    - run: git submodule update --init --recursive --remote
     - uses: ArtiomTr/jest-coverage-report-action@v2
       id: coverage
       with:
