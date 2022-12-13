@@ -1,12 +1,12 @@
-import { Condicao } from '../construtos';
-import { Criar, Comando, Selecionar, Atualizar, Inserir, Excluir } from '../comandos';
+import { Condicao } from '../../comum/fontes/construtos';
+import { Criar, Comando, Selecionar, Atualizar, Inserir, Excluir } from '../../comum/fontes/comandos';
 import {
     RetornoAvaliadorSintatico,
     RetornoLexador
-} from '../interfaces/retornos';
-import tiposDeSimbolos from '../tipos-de-simbolos';
-import { AvaliadorSintaticoBase } from './avaliador-sintatico-base';
-import { Coluna } from '../construtos/coluna';
+} from '../../comum/fontes/interfaces/retornos';
+import tiposDeSimbolos from '../../comum/fontes/tipos-de-simbolos';
+import { AvaliadorSintaticoBase } from '../../comum/fontes/avaliador-sintatico/avaliador-sintatico-base';
+import { Coluna } from '../../comum/fontes/construtos/coluna';
 
 export class AvaliadorSintatico extends AvaliadorSintaticoBase {
     private avancar(): void {

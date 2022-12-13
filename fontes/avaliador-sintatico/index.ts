@@ -1,3 +1,2 @@
 export { AvaliadorSintatico } from './avaliador-sintatico';
-export { ErroAvaliadorSintatico } from './erro-avaliador-sintatico';
-export * from '../construtos/coluna';
+export * from '../../comum/fontes/construtos/coluna';

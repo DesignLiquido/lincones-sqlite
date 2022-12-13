@@ -1,9 +1,9 @@
-import { SimboloInterface } from '../interfaces';
-import { Simbolo } from './simbolo';
+import { SimboloInterface } from '../../comum/fontes/interfaces';
+import { Simbolo } from '../../comum/fontes/lexador/simbolo';
 
 import palavrasReservadas from '../palavras-reservadas';
-import tiposDeSimbolos from '../tipos-de-simbolos';
-import { RetornoLexador } from '../interfaces/retornos';
+import tiposDeSimbolos from '../../comum/fontes/tipos-de-simbolos';
+import { RetornoLexador } from '../../comum/fontes/interfaces/retornos';
 
 export class Lexador {
     inicioSimbolo: number;

@@ -1,8 +1,8 @@
-import { Coluna } from "../avaliador-sintatico";
-import { Atualizar, Comando, Criar, Excluir, Inserir, Selecionar } from "../comandos";
-import { Simbolo } from "../lexador/simbolo";
+import { Coluna } from "../../comum/fontes/avaliador-sintatico"
+import { Atualizar, Comando, Criar, Excluir, Inserir, Selecionar } from "../../comum/fontes/comandos";
+import { Simbolo } from "../../comum/fontes/lexador/simbolo";
 
-import tiposDeSimbolos from "../tipos-de-simbolos";
+import tiposDeSimbolos from "../../comum/fontes/tipos-de-simbolos";
 
 export class Tradutor {
 
@@ -56,8 +56,8 @@ export class Tradutor {
             traduzir += `INTEGER `;
         }
         else if(tiposDeSimbolos.TEXTO === coluna.tipo){
-            const simbolo = coluna.tamanho as Simbolo
-            traduzir += `VARCHAR(${simbolo.literal}) `;
+            // const simbolo = coluna.tamanho as Simbolo
+            // traduzir += `VARCHAR(${simbolo.literal}) `;
         }
         else if(tiposDeSimbolos.LOGICO === coluna.tipo)
             traduzir += "BOOLEAN "
