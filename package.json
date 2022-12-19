@@ -24,9 +24,9 @@
     },
     "homepage": "https://github.com/DesignLiquido/lincones-sqlite#readme",
     "scripts": {
-        "empacotar": "rimraf ./dist && tsc && copyfiles -V ./bin/lincones-sqlite ./bin/lincones-sqlite.cmd ./dist && copyfiles -V ./README.md ./dist && copyfiles -V ./package.json ./dist",
+        "empacotar": "rimraf ./dist && tsc && copyfiles -V ./bin/lincones-sqlite ./bin/lincones-sqlite.cmd ./dist && copyfiles -V ./README.md ./dist",
         "formatacao-prettier": "prettier --config .prettierrc  *.ts --write",
-        "publicar-npm": "npm publish --access public",
+        "publicar-npm": "npm publish ./dist --access public",
         "lint": "eslint . --ext .ts",
         "testes-unitarios": "jest --coverage"
     },
@@ -42,6 +42,9 @@
         "sql",
         "sqlite"
     ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
     "devDependencies": {
         "@types/jest": "^29.2.3",
         "@types/node": "^18.11.9",
