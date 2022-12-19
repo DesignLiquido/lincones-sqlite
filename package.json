@@ -1,7 +1,7 @@
 {
     "name": "@designliquido/lincones-sqlite",
     "description": "Implementação de LinConEs para SQLite.",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "main": "index.js",
     "author": "Leonel Sanches da Silva",
     "contributors": [
