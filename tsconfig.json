@@ -10,5 +10,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "exclude": ["babel.config.js", "dist/**/*", "node_modules", "jest.config.ts"]
+  "exclude": [
+    "babel.config.js", 
+    "comum/testes",
+    "coverage",
+    "dist/**/*", 
+    "jest.config.ts",
+    "node_modules", 
+    "testes"
+  ]
 }
