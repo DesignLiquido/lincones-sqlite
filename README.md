@@ -4,10 +4,12 @@ Implementação LinConEs para SQLite.
 
 Especificação em https://github.com/DesignLiquido/LinConEs.
 
-## Submódulos
+## Modo de uso
 
-Essa biblioteca depende de [lincones-js](https://github.com/DesignLiquido/lincones-js), que implementa os fontes base contidos no diretório comum. Para atualizar os fontes deste diretório, use:
+Para usar no seu computador, [você deve ter antes o Node.js instalado em seu ambiente](https://dicasdejavascript.com.br/instalacao-do-nodejs-e-npm-no-windows-passo-a-passo).
+
+Com o Node.js instalado, execute o seguinte comando em um prompt de comando (Terminal, PowerShell ou `cmd` no Windows, Terminal ou `bash` em Mac e Linux):
 
 ```
-git submodule update --init --recursive --remote
+npm install -g @designliquido/lincones-sqlite
 ```

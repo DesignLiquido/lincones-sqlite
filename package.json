@@ -1,7 +1,8 @@
 {
-    "name": "lincones-sqlite",
-    "description": "Implementação LinConEs para SQLite.",
+    "name": "@designliquido/lincones-sqlite",
+    "description": "Implementação de LinConEs para SQLite.",
     "version": "0.0.0",
+    "main": "index.js",
     "author": "Leonel Sanches da Silva",
     "contributors": [
         {
@@ -11,16 +12,36 @@
         {
             "name": "Italo Brito Brandão",
             "url": "https://github.com/ItaloCobains"
+        },
+        {
+            "name": "Samuel Renan Gonçalves Vaz",
+            "url": "https://www.linkedin.com/in/samuel-renan-gon%C3%A7alves-vaz-b6b83a103/"
         }
     ],
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/DesignLiquido/lincones-sqlite/issues"
+    },
+    "homepage": "https://github.com/DesignLiquido/lincones-sqlite#readme",
     "scripts": {
-        "empacotar": "rm -Rf ./dist && tsc && copyfiles -V ./README.md ./dist",
+        "empacotar": "rimraf ./dist && tsc && copyfiles -V ./bin/lincones-sqlite ./bin/lincones-sqlite.cmd ./dist && copyfiles -V ./README.md ./dist && copyfiles -V ./package.json ./dist",
         "formatacao-prettier": "prettier --config .prettierrc  *.ts --write",
         "publicar-npm": "npm publish --access public",
         "lint": "eslint . --ext .ts",
         "testes-unitarios": "jest --coverage"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DesignLiquido/lincones-sqlite.git"
+    },
+    "bin": {
+        "lincones-sqlite": "./bin/lincones-sqlite"
+    },
+    "keywords": [
+        "lincones",
+        "sql",
+        "sqlite"
+    ],
     "devDependencies": {
         "@types/jest": "^29.2.3",
         "@types/node": "^18.11.9",
@@ -28,6 +49,7 @@
         "@typescript-eslint/parser": "^5.45.0",
         "eslint": "^8.28.0",
         "jest": "^29.3.1",
+        "rimraf": "^3.0.2",
         "ts-jest": "^29.0.3",
         "ts-node": "^10.9.1",
         "typescript": "^4.9.3"
