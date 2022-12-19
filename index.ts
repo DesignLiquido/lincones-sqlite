@@ -1,1 +1,1 @@
-export { Lincones } from "./fontes/lincones";
+export * from "./fontes/lincones-sqlite";
