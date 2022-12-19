@@ -17,9 +17,7 @@ lincones.clienteSQLite.abrir().then(() => {
                 console.table(resultado.linhasRetornadas);
             }
             
-            if (resultado.linhasAfetadas) {
-                console.log(`Linhas afetadas: ${resultado.linhasAfetadas}`);
-            }
+            console.log(resultado.mensagemExecucao);
 
             if (resultado.ultimoId) {
                 console.log(`ID retornado pela operação: ${resultado.ultimoId}`);
