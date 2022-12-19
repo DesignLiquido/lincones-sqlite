@@ -35,7 +35,7 @@ describe('Tradutor', () => {
 
             it('Atualizar', () => {
                 const codigo = [
-                    'ATUALIZAR clientes DEFINIR NOME = "Pernalonga", IDADE = 18, ATIVO = VERDADEIRO, CASADO = FALSO ONDE ID = 10;'
+                    'ATUALIZAR clientes DEFINIR NOME = "Pernalonga", IDADE = 18, ATIVO = VERDADEIRO, EMAIL = "pernalonga2@warnerbros.com" ONDE ID = 10;'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =
@@ -51,8 +51,6 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('18');
                 expect(resultado).toContain('ATIVO');
                 expect(resultado).toContain('true');
-                expect(resultado).toContain('CASADO');
-                expect(resultado).toContain('false');
                 expect(resultado).toContain('WHERE');
                 expect(resultado).toContain('ID');
                 expect(resultado).toContain('=');
@@ -61,7 +59,7 @@ describe('Tradutor', () => {
 
             it('Inserir', () => {
                 const codigo = [
-                    'INSERIR EM clientes (NOME, IDADE, ATIVO, CASADO) VALORES ("Pernalonga", 18, verdadeiro, falso)'
+                    'INSERIR EM clientes (NOME, IDADE, ATIVO, EMAIL) VALORES ("Pernalonga", 18, verdadeiro, "pernalonga@warnerbros.com")'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =
@@ -74,7 +72,6 @@ describe('Tradutor', () => {
                 expect(resultado).toContain('Pernalonga');
                 expect(resultado).toContain('18');
                 expect(resultado).toContain('true');
-                expect(resultado).toContain('false');
             });
 
             it('Selecionar Tudo', () => {

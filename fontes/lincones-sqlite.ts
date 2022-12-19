@@ -16,12 +16,17 @@ export class LinconesSQLite {
         this.clienteSQLite = new ClienteSQLite();
     }
 
-    executar(comando: string) {
+    async executar(comando: string): Promise<any> {
         const resultadoLexador = this.lexador.mapear([comando]);
         const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
         const resultadoTraducao = this.tradutor.traduzir(resultadoAvaliacaoSintatica.comandos);
 
-        const resultadoExecucao = this.clienteSQLite.executarComando(resultadoTraducao);
+        let resultadoExecucao: any;
+        if (resultadoAvaliacaoSintatica.comandos[0].constructor.name === 'Selecionar') {
+            resultadoExecucao = await this.clienteSQLite.executarComandoSelecao(resultadoTraducao);
+        } else {
+            resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao);
+        }
 
         return resultadoExecucao;
     }
