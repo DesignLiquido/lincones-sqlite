@@ -13,7 +13,18 @@ lincones.clienteSQLite.abrir().then(() => {
     interfaceLeitura.prompt();
     interfaceLeitura.on('line', (linha: string) => {
         lincones.executar(linha).then(resultado => {
-            console.table(resultado);
+            if (resultado.linhasRetornadas.length > 0) {
+                console.table(resultado.linhasRetornadas);
+            }
+            
+            if (resultado.linhasAfetadas) {
+                console.log(`Linhas afetadas: ${resultado.linhasAfetadas}`);
+            }
+
+            if (resultado.ultimoId) {
+                console.log(`ID retornado pela operação: ${resultado.ultimoId}`);
+            }
+
             return Promise.resolve();
         }).then(() => {
             interfaceLeitura.prompt();

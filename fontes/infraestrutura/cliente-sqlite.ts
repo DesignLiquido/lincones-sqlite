@@ -1,6 +1,5 @@
 import * as caminho from 'node:path';
 
-// import sqlite3 from 'sqlite3';
 import * as sqlite from 'sqlite';
 
 export class ClienteSQLite {
@@ -24,15 +23,6 @@ export class ClienteSQLite {
             this.origemDados = ':memory:';
         }
     }
-    
-    /* private async fechar(): Promise<void> {
-        this.bancoDeDadosInstancia.close((erro: Error) => {
-            if (erro) {
-                console.error(erro.message);
-            }
-            console.log('Conexão com o banco de dados SQLite encerrada.');
-        });
-    } */
 
     public async abrir() {
         const database = await sqlite.open(this.origemDados);
@@ -40,13 +30,10 @@ export class ClienteSQLite {
         console.log('Conectado ao banco de dados SQLite.');
     }
 
-    public async executarComando(comando: string): Promise<sqlite.Statement> {
-        /* if (!this.bancoDeDadosInstancia) {
-            console.log(
-                'Não foi possível executar o SQLite. Você precisa inicializar o banco de dados.'
-            );
-            return null;
-        } */
+    public async executarComando(comando: string): Promise<any> {
+        if (comando.startsWith('SELECT')) {
+            return await this.executarComandoSelecao(comando);
+        }
 
         return await this.instanciaBancoDeDados.run(comando, (erro: Error) => {
             if (erro) {
@@ -55,7 +42,7 @@ export class ClienteSQLite {
         });
     }
 
-    public async executarComandoSelecao(comando: string) {
-        return await this.instanciaBancoDeDados.get(comando);
+    private async executarComandoSelecao(comando: string) {
+        return await this.instanciaBancoDeDados.all(comando);
     }
 }
