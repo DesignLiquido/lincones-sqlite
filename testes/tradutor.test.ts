@@ -105,7 +105,7 @@ describe('Tradutor', () => {
 
             it('Criar', () => {
                 const codigo = [
-                    'CRIAR TABELA clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NULO, ATIVO LOGICO NAO NULO);'
+                    'CRIAR TABELA clientes (ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NULO, ATIVO LOGICO NAO NULO);'
                 ];
                 const retornoLexador = lexador.mapear(codigo);
                 const retornoAvaliadorSintatico =

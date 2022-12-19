@@ -21,11 +21,23 @@ export class LinconesSQLite {
         const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
         const resultadoTraducao = this.tradutor.traduzir(resultadoAvaliacaoSintatica.comandos);
 
+        if (resultadoAvaliacaoSintatica.comandos.length <= 0) {
+            return {};
+        }
+
         let resultadoExecucao: any;
         if (resultadoAvaliacaoSintatica.comandos[0].constructor.name === 'Selecionar') {
             resultadoExecucao = await this.clienteSQLite.executarComandoSelecao(resultadoTraducao);
         } else {
             resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao);
+        }
+
+        if (resultadoExecucao.changes) {
+            console.log(resultadoExecucao.changes);
+        }
+
+        if (resultadoExecucao.lastID) {
+            console.log(resultadoExecucao.lastID);
         }
 
         return resultadoExecucao;

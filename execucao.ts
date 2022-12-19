@@ -13,7 +13,7 @@ lincones.clienteSQLite.abrir().then(() => {
     interfaceLeitura.prompt();
     interfaceLeitura.on('line', (linha: string) => {
         lincones.executar(linha).then(resultado => {
-            console.log(resultado);
+            console.table(resultado);
             return Promise.resolve();
         }).then(() => {
             interfaceLeitura.prompt();
