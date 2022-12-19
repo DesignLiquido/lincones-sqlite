@@ -12,12 +12,14 @@ export class ClienteSQLite {
     // caminho do arquivo exemplo: /tmp/banco.db
     // ":memory:" para criar um banco de dados em memória
     // null para criar um banco de dados temporário
-    constructor(origemDados: string | null) {
+    constructor(origemDados: string | null = null) {
         this.caminhoRaiz = process.cwd();
         this.caminhoTotalArquivo = null;
 
         if (origemDados !== ':memory:' && origemDados !== null) {
             this.caminhoTotalArquivo = caminho.join(this.caminhoRaiz, origemDados);
+        } else {
+            origemDados = ':memory:';
         }
 
         this.bancoDeDadosInstancia = new sqlite3.Database(
