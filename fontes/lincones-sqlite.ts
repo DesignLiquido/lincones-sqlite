@@ -13,5 +13,10 @@ export class LinconesSQLite {
         this.tradutor = new Tradutor();
     }
 
-    
+    executar(comando: string) {
+        const resultadoLexador = this.lexador.mapear([comando]);
+        const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
+        const resultadoTraducao = this.tradutor.traduzir(resultadoAvaliacaoSintatica.comandos);
+        return resultadoTraducao;
+    }
 }
