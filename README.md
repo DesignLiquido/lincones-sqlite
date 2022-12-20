@@ -14,7 +14,7 @@ Com o Node.js instalado, execute o seguinte comando em um prompt de comando (Ter
 npm install -g @designliquido/lincones-sqlite
 ```
 
-Se estiver contribuindo com o desenvolvimento do projeto, lembre-se de executar o seguinte comando no terminal:
+Se tem interesse em contribuir com o desenvolvimento desse projeto, lembre-se de executar o seguinte comando no terminal:
 
 ```
 git submodule update --init --recursive --remote
