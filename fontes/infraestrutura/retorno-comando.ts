@@ -19,13 +19,15 @@ export class RetornoComando {
         }
 
         if (resultadoExecucao.stmt) {
+            const linhas = this.linhasAfetadas || 0;
             this.comandoExecutado = resultadoExecucao.stmt;
-            this.mensagemExecucao = `Ok (${this.linhasAfetadas || 0} linhas afetadas)`;
+            this.mensagemExecucao = `Ok (${linhas} ${linhas > 1 ? 'linhas afetadas' : 'linha afetada'})`;
         }
 
         if (Array.isArray(resultadoExecucao)) {
+            const linhas = this.linhasRetornadas.length || 0
             this.linhasRetornadas = resultadoExecucao;
-            this.mensagemExecucao = `(${this.linhasRetornadas.length} linhas retornadas)`;
+            this.mensagemExecucao = `(${linhas} ${linhas > 1 ? 'linhas retornadas' : 'linha retornada'})`;
         }
     }
 }
