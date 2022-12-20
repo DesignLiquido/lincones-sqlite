@@ -16,7 +16,7 @@ npm install -g @designliquido/lincones-sqlite
 
 ## Observação
 
-Se você tem interesse em contribuir com o desenvolvimento desse projeto, logo após fazer o clone e atualizar os pacotes com `yarn`, lembre-se de executar o seguinte comando.
+Se você tem interesse em contribuir com o desenvolvimento do projeto, logo após fazer o clone e atualizar os pacotes com `yarn`, lembre-se de executar o seguinte comando.
 
 ```
 git submodule update --init --recursive --remote
