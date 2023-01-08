@@ -1,9 +1,9 @@
 import * as caminho from 'node:path';
 
 import * as sqlite from 'sqlite';
+import sqlite3 from 'sqlite3';
 
 export class ClienteSQLite {
-    // bancoDeDadosInstancia: sqlite3.Database;
     instanciaBancoDeDados: sqlite.Database;
     readonly caminhoRaiz: string;
     origemDados: string;
@@ -25,7 +25,10 @@ export class ClienteSQLite {
     }
 
     public async abrir() {
-        const database = await sqlite.open(this.origemDados);
+        const database = await sqlite.open({ 
+            filename: this.origemDados,
+            driver: sqlite3.Database
+        });
         this.instanciaBancoDeDados = database;
         console.log('Conectado ao banco de dados SQLite.');
     }
