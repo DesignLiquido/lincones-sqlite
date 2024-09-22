@@ -1,0 +1,3 @@
+[submodule "fontes/comum"]
+	path = fontes/comum
+	url = https://github.com/DesignLiquido/lincones-js.git
