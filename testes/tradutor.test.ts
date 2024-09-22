@@ -2,7 +2,7 @@ import { AvaliadorSintatico } from "../fontes/avaliador-sintatico";
 import { Lexador } from "../fontes/comum/fontes/lexador";
 import { TradutorSqLite } from "../fontes/tradutor";
 
-describe('Tradutor', () => {
+describe('Tradutor (SQLite)', () => {
     let lexador: Lexador;
     let avaliadorSintatico: AvaliadorSintatico;
     let tradutor: TradutorSqLite;
