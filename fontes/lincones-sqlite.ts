@@ -1,6 +1,6 @@
-import { Tradutor } from "../comum/fontes/tradutor";
-import { AvaliadorSintatico } from "../comum/fontes/avaliador-sintatico";
-import { Lexador } from "./lexador";
+import { Tradutor } from "./comum/fontes/tradutor";
+import { AvaliadorSintatico } from "./comum/fontes/avaliador-sintatico";
+import { Lexador } from "./comum/fontes/lexador";
 import { ClienteSQLite } from "./infraestrutura/cliente-sqlite";
 import { RetornoComando } from "./infraestrutura";
 
