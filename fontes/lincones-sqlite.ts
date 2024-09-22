@@ -1,4 +1,4 @@
-import { Tradutor } from "./comum/fontes/tradutor";
+import { TradutorSqLite } from "./tradutor";
 import { AvaliadorSintatico } from "./comum/fontes/avaliador-sintatico";
 import { Lexador } from "./comum/fontes/lexador";
 import { ClienteSQLite } from "./infraestrutura/cliente-sqlite";
@@ -7,13 +7,13 @@ import { RetornoComando } from "./infraestrutura";
 export class LinconesSQLite {
     lexador: Lexador;
     avaliadorSintatico: AvaliadorSintatico;
-    tradutor: Tradutor;
+    tradutor: TradutorSqLite;
     clienteSQLite: ClienteSQLite;
 
     constructor() {
         this.lexador = new Lexador();
         this.avaliadorSintatico = new AvaliadorSintatico();
-        this.tradutor = new Tradutor();
+        this.tradutor = new TradutorSqLite();
         this.clienteSQLite = new ClienteSQLite();
     }
 

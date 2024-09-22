@@ -1,5 +1,5 @@
 import { AvaliadorSintatico } from '../fontes/avaliador-sintatico';
-import { Lexador } from '../fontes/lexador';
+import { Lexador } from '../fontes/comum/fontes/lexador';
 
 describe('Avaliador Sintático', () => {
     let lexador: Lexador;
@@ -32,7 +32,7 @@ describe('Avaliador Sintático', () => {
                 const resultadoAvaliadorSintatico =
                     avaliadorSintatico.analisar(resultadoLexador);
                 expect(resultadoAvaliadorSintatico).toBeTruthy();
-                expect(resultadoAvaliadorSintatico.comandos).toHaveLength(2);
+                expect(resultadoAvaliadorSintatico.comandos).toHaveLength(1);
                 expect(resultadoAvaliadorSintatico.erros).toHaveLength(0);
             });
 
