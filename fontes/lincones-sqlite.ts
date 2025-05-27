@@ -17,7 +17,13 @@ export class LinconesSQLite {
         this.clienteSQLite = new ClienteSQLite();
     }
 
-    async executar(comando: string): Promise<RetornoComando> {
+    /**
+     * 
+     * @param _ Normalmente a instância do interpretador Delégua.
+     * @param comando 
+     * @returns 
+     */
+    async executar(_: any, comando: string): Promise<RetornoComando> {
         const resultadoLexador = this.lexador.mapear([comando]);
         const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
         const resultadoTraducao = this.tradutor.traduzir(resultadoAvaliacaoSintatica.comandos);
