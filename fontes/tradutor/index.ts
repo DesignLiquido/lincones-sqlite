@@ -8,9 +8,9 @@ import {
     Selecionar
 } from '../comum/fontes/comandos';
 import { Simbolo } from '../comum/fontes/lexador/simbolo';
+import { TradutorSqlAnsi } from '../comum';
 
 import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos';
-import { TradutorSqlAnsi } from '../comum';
 
 export class TradutorSqLite extends TradutorSqlAnsi {
     traduzirOperador(operador: string) {
@@ -67,7 +67,7 @@ export class TradutorSqLite extends TradutorSqlAnsi {
 
     traduzirColuna(coluna: Coluna) {
         let traduzir = '';
-        if (coluna.chavePrimaria) traduzir += 'PRIMARY KEY ';
+        
         if (tiposDeSimbolos.INTEIRO === coluna.tipo) {
             traduzir += `INTEGER `;
         } else if (tiposDeSimbolos.TEXTO === coluna.tipo) {
@@ -75,6 +75,7 @@ export class TradutorSqLite extends TradutorSqlAnsi {
             traduzir += `VARCHAR(${simbolo.literal}) `;
         } else if (tiposDeSimbolos.LOGICO === coluna.tipo)
             traduzir += 'BOOLEAN ';
+        if (coluna.chavePrimaria) traduzir += 'PRIMARY KEY ';
         if (coluna.nulo) traduzir += 'NULL';
         else traduzir += 'NOT NULL';
 
