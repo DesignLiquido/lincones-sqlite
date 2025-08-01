@@ -50,7 +50,7 @@ describe('Tradutor (SQLite)', () => {
                 expect(resultado).toContain('IDADE');
                 expect(resultado).toContain('18');
                 expect(resultado).toContain('ATIVO');
-                expect(resultado).toContain('true');
+                expect(resultado).toContain('TRUE');
                 expect(resultado).toContain('WHERE');
                 expect(resultado).toContain('ID');
                 expect(resultado).toContain('=');
@@ -71,7 +71,7 @@ describe('Tradutor (SQLite)', () => {
                 expect(resultado).toContain('VALUES');
                 expect(resultado).toContain('Pernalonga');
                 expect(resultado).toContain('18');
-                expect(resultado).toContain('true');
+                expect(resultado).toContain('TRUE');
             });
 
             it('Selecionar Tudo', () => {
