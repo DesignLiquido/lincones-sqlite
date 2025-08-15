@@ -1,16 +1,12 @@
 import { Coluna } from '../comum/fontes/construtos';
 import {
-    Atualizar,
     Comando,
-    Criar,
-    Excluir,
-    Inserir,
-    Selecionar
+    Criar
 } from '../comum/fontes/comandos';
 import { Simbolo } from '../comum/fontes/lexador/simbolo';
 import { TradutorSqlAnsi } from '../comum/fontes/tradutor/tradutor-sql-ansi';
 
-import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos';
+import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos/lincones';
 
 export class TradutorSqLite extends TradutorSqlAnsi {
     traduzirOperador(operador: string) {

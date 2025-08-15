@@ -38,7 +38,7 @@ describe('Avaliador Sintático', () => {
 
             it('Sucesso - Excluir em Tabela Clientes', () => {
                 const codigo = [
-                    'EXCLUIR clientes ONDE ID = 3;'
+                    'EXCLUIR DE clientes ONDE ID = 3;'
                 ];
                 const resultadoLexador = lexador.mapear(codigo);
                 const resultadoAvaliadorSintatico =
