@@ -6,7 +6,7 @@ import {
 import { Simbolo } from '../comum/fontes/lexador/simbolo';
 import { TradutorSqlAnsi } from '../comum/fontes/tradutor/tradutor-sql-ansi';
 
-import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos/lincones';
+import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos';
 
 export class TradutorSqLite extends TradutorSqlAnsi {
     traduzirOperador(operador: string) {

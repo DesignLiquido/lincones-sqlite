@@ -3,7 +3,7 @@ import {
     RetornoAvaliadorSintatico,
     RetornoLexador
 } from '../comum/fontes/interfaces/retornos';
-import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos/lincones';
+import tiposDeSimbolos from '../comum/fontes/tipos-de-simbolos';
 import { AvaliadorSintaticoBase } from '../comum/fontes/avaliador-sintatico/avaliador-sintatico-base';
 
 export class AvaliadorSintatico extends AvaliadorSintaticoBase {
