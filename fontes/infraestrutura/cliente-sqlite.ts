@@ -33,19 +33,20 @@ export class ClienteSQLite {
         console.log('Conectado ao banco de dados SQLite.');
     }
 
-    public async executarComando(comando: string): Promise<any> {
+    public async executarComando(comando: string, parametros: any[] = []): Promise<any> {
         if (comando.startsWith('SELECT')) {
-            return await this.executarComandoSelecao(comando);
+            return await this.executarComandoSelecao(comando, parametros);
         }
 
-        return await this.instanciaBancoDeDados.run(comando, (erro: Error) => {
-            if (erro) {
-                console.log(erro.message);
-            }
-        });
+        return await this.instanciaBancoDeDados.run(comando, parametros);
+            // (erro: Error) => {
+            // if (erro) {
+            //     console.log(erro.message);
+            // }
+        // });
     }
 
-    private async executarComandoSelecao(comando: string) {
-        return await this.instanciaBancoDeDados.all(comando);
+    private async executarComandoSelecao(comando: string, parametros: any[] = []): Promise<any> {
+        return await this.instanciaBancoDeDados.all(comando, parametros);
     }
 }

@@ -18,12 +18,13 @@ export class LinconesSQLite {
     }
 
     /**
-     * 
+     * Traduz um comando de LinConEs para SQL e executa no banco de dados SQLite.
      * @param _ Normalmente a instância do interpretador Delégua.
-     * @param comando 
+     * @param comando O comando em LinConEs a ser traduzido e executado.
+     * @param parametros Parâmetros adicionais para o comando, se necessário.
      * @returns 
      */
-    async executar(_: any, comando: string): Promise<RetornoComando> {
+    async executar(_: any, comando: string, parametros: any[] = []): Promise<RetornoComando> {
         const resultadoLexador = this.lexador.mapear([comando]);
         const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
         const resultadoTraducao = this.tradutor.traduzir(resultadoAvaliacaoSintatica.comandos);
@@ -32,7 +33,7 @@ export class LinconesSQLite {
             return new RetornoComando(null);
         }
 
-        const resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao);
+        const resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao, parametros);
         const retorno = new RetornoComando(resultadoExecucao);
 
         return retorno;
