@@ -24,7 +24,7 @@ export class ClienteSQLite {
         }
     }
 
-    public async abrir() {
+    async abrir() {
         const database = await sqlite.open({ 
             filename: this.origemDados,
             driver: sqlite3.Database
@@ -33,7 +33,7 @@ export class ClienteSQLite {
         console.log('Conectado ao banco de dados SQLite.');
     }
 
-    public async executarComando(comando: string, parametros: any[] = []): Promise<any> {
+    async executarComando(comando: string, parametros: any[] = []): Promise<any> {
         if (comando.startsWith('SELECT')) {
             return await this.executarComandoSelecao(comando, parametros);
         }

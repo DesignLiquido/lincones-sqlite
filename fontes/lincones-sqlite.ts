@@ -3,6 +3,7 @@ import { AvaliadorSintatico } from "./comum/fontes/avaliador-sintatico";
 import { Lexador } from "./comum/fontes/lexador";
 import { ClienteSQLite } from "./infraestrutura/cliente-sqlite";
 import { RetornoComando } from "./infraestrutura";
+import { Comando } from "./comum/fontes";
 
 export class LinconesSQLite {
     lexador: Lexador;
@@ -17,25 +18,43 @@ export class LinconesSQLite {
         this.clienteSQLite = new ClienteSQLite();
     }
 
+    async executarComando(comando: Comando) {
+        return await this.executarInterno([comando], comando.parametros);
+    }
+
     /**
      * Traduz um comando de LinConEs para SQL e executa no banco de dados SQLite.
      * @param _ Normalmente a instância do interpretador Delégua.
-     * @param comando O comando em LinConEs a ser traduzido e executado.
+     * @param sentencaLincones A sentença em LinConEs a ser traduzida e executada.
      * @param parametros Parâmetros adicionais para o comando, se necessário.
      * @returns 
      */
-    async executar(_: any, comando: string, parametros: any[] = []): Promise<RetornoComando> {
-        const resultadoLexador = this.lexador.mapear([comando]);
+    async executar(_: any, sentencaLincones: string, parametros: any[] = []): Promise<RetornoComando[]> {
+        const resultadoLexador = this.lexador.mapear([sentencaLincones]);
         const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
-        const resultadoTraducao = this.tradutor.traduzir(resultadoAvaliacaoSintatica.comandos);
 
-        if (resultadoAvaliacaoSintatica.comandos.length <= 0) {
-            return new RetornoComando(null);
+        if (resultadoAvaliacaoSintatica.erros.length > 0) {
+            throw new Error(`Erros encontrados na avaliação de comandos: ${resultadoAvaliacaoSintatica.erros.reduce((mensagens, erro) => mensagens += erro.message + '; ', '')}.`);
         }
 
-        const resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao, parametros);
-        const retorno = new RetornoComando(resultadoExecucao);
+        return await this.executarInterno(resultadoAvaliacaoSintatica.comandos, parametros);
+    }
 
-        return retorno;
+    private async executarInterno(comandos: Comando[], parametros: any[]): Promise<RetornoComando[]> {
+        if (comandos.length <= 0) {
+            return [];
+        }
+
+        const retornosComandos: RetornoComando[] = [];
+
+        for (const comando of comandos) {
+            const resultadoTraducao = this.tradutor.traduzir([comando]);
+            // TODO: Parâmetros
+            const resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao, parametros);
+            const retorno = new RetornoComando(resultadoExecucao);
+            retornosComandos.push(retorno)
+        }
+
+        return retornosComandos;
     }
 }
