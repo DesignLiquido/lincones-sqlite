@@ -3,9 +3,9 @@ import { AvaliadorSintatico } from "./comum/fontes/avaliador-sintatico";
 import { Lexador } from "./comum/fontes/lexador";
 import { ClienteSQLite } from "./infraestrutura/cliente-sqlite";
 import { RetornoComando } from "./infraestrutura";
-import { Comando } from "./comum/fontes";
+import { Comando, TecnologiaLinconesInterface } from "./comum/fontes";
 
-export class LinconesSQLite {
+export class LinconesSQLite implements TecnologiaLinconesInterface {
     lexador: Lexador;
     avaliadorSintatico: AvaliadorSintatico;
     tradutor: TradutorSqLite;
@@ -15,7 +15,10 @@ export class LinconesSQLite {
         this.lexador = new Lexador();
         this.avaliadorSintatico = new AvaliadorSintatico();
         this.tradutor = new TradutorSqLite();
-        this.clienteSQLite = new ClienteSQLite();
+    }
+
+    iniciar(caminho: string): void {
+        this.clienteSQLite = new ClienteSQLite(caminho);
     }
 
     async executarComando(comando: Comando) {
@@ -30,6 +33,7 @@ export class LinconesSQLite {
      * @returns 
      */
     async executar(_: any, sentencaLincones: string, parametros: any[] = []): Promise<RetornoComando[]> {
+        const parametrosNaoNulos = parametros || [];
         const resultadoLexador = this.lexador.mapear([sentencaLincones]);
         const resultadoAvaliacaoSintatica = this.avaliadorSintatico.analisar(resultadoLexador);
 
@@ -37,7 +41,7 @@ export class LinconesSQLite {
             throw new Error(`Erros encontrados na avaliação de comandos: ${resultadoAvaliacaoSintatica.erros.reduce((mensagens, erro) => mensagens += erro.message + '; ', '')}.`);
         }
 
-        return await this.executarInterno(resultadoAvaliacaoSintatica.comandos, parametros);
+        return await this.executarInterno(resultadoAvaliacaoSintatica.comandos, parametrosNaoNulos);
     }
 
     private async executarInterno(comandos: Comando[], parametros: any[]): Promise<RetornoComando[]> {
