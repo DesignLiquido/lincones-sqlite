@@ -30,7 +30,7 @@ export class ClienteSQLite {
             driver: sqlite3.Database
         });
         this.instanciaBancoDeDados = database;
-        console.log('Conectado ao banco de dados SQLite.');
+        console.info('Conectado ao banco de dados SQLite.');
     }
 
     async executarComando(comando: string, parametros: any[] = []): Promise<any> {

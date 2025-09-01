@@ -17,8 +17,9 @@ export class LinconesSQLite implements TecnologiaLinconesInterface {
         this.tradutor = new TradutorSqLite();
     }
 
-    iniciar(caminho: string): void {
+    async iniciar(caminho: string): Promise<void> {
         this.clienteSQLite = new ClienteSQLite(caminho);
+        await this.clienteSQLite.abrir();
     }
 
     async executarComando(comando: Comando) {
