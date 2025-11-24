@@ -52,15 +52,6 @@ export class TradutorSqLite extends TradutorSqlAnsi {
         return resultado;
     }
 
-    dicionarioComandos = {
-        Alterar: this.traduzirComandoAlterar.bind(this),
-        Atualizar: this.traduzirComandoAtualizar.bind(this),
-        Criar: this.traduzirComandoCriar.bind(this),
-        Excluir: this.traduzirComandoExcluir.bind(this),
-        Inserir: this.traduzirComandoInserir.bind(this),
-        Selecionar: this.traduzirComandoSelecionar.bind(this)
-    };
-
     traduzir(comandos: Comando[]) {
         let resultado = '';
 
