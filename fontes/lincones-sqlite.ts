@@ -52,8 +52,16 @@ export class LinconesSQLite implements TecnologiaLinconesInterface {
 
         const retornosComandos: RetornoComando[] = [];
 
-        for (const comando of comandos) {
+        // Filtrar comandos nulos ou indefinidos antes de processar.
+        const comandosValidos = comandos.filter((c) => c);
+        
+        for (const comando of comandosValidos) {
             const resultadoTraducao = this.tradutor.traduzir([comando]);
+            
+            if (!resultadoTraducao || resultadoTraducao.trim() === '') {
+                throw new Error(`Tradução produziu SQL vazio para comando: ${comando.constructor.name}`);
+            }
+            
             // TODO: Parâmetros
             const resultadoExecucao = await this.clienteSQLite.executarComando(resultadoTraducao, parametros);
             const retorno = new RetornoComando(resultadoExecucao);

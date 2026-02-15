@@ -8,7 +8,7 @@ describe('LinconesSqlite', () => {
         const comandoCriarTabela = 'CRIAR TABELA SE NÃO EXISTIR clientes(ID INTEIRO NAO NULO CHAVE PRIMARIA AUTO INCREMENTO, NOME TEXTO(100) NAO NULO, IDADE INTEIRO NAO NULO, EMAIL TEXTO(255) NAO NULO, ATIVO LOGICO NAO NULO);';
         
         try {
-            await linconesSqlite.clienteSQLite.abrir();
+            await linconesSqlite.iniciar(':memory:');
             await linconesSqlite.executar(null, comandoCriarTabela);
         } catch (error) {
             console.error('Erro no pré-teste:', error);
@@ -16,7 +16,25 @@ describe('LinconesSqlite', () => {
         }
     });
 
-    it.skip('Execução com parâmetros', async () => {
+    it('Execução simples sem parâmetros', async () => {
+        const comandoInserir = "INSERIR EM clientes (NOME, IDADE, EMAIL, ATIVO) VALORES ('Pernalonga', 18, 'pernalonga@warnerbros.com', VERDADEIRO);";
+        const comandoSelecionar = 'SELECIONAR * DE clientes;';
+
+        try {
+            const retornosInserir = await linconesSqlite.executar(null, comandoInserir);
+            expect(retornosInserir).toBeTruthy();
+            expect(retornosInserir.length).toBeGreaterThan(0);
+
+            const retornosSelecionar = await linconesSqlite.executar(null, comandoSelecionar);
+            expect(retornosSelecionar).toBeTruthy();
+            expect(retornosSelecionar.length).toBeGreaterThan(0);
+        } catch (error) {
+            console.error('Erro de execução em teste simples:', error);
+            throw error;
+        }
+    });
+
+    it('Execução com parâmetros', async () => {
         const comandoInserir = 'INSERIR EM clientes (NOME, IDADE, EMAIL, ATIVO) VALORES (?, ?, ?, ?);';
         const comandoAtualizar = 'ATUALIZAR clientes DEFINIR NOME = ?, IDADE = ?, EMAIL = ?, ATIVO = ? ONDE ID = ?;';
         const comandoExcluir = 'EXCLUIR DE clientes ONDE ID = ?;';
