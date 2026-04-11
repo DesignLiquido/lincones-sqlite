@@ -19,6 +19,10 @@
         }
     ],
     "license": "MIT",
+    "delprops": {
+        "espacoNomes": "liquido.dados",
+        "esquema": "./delprops/dados"
+    },
     "bugs": {
         "url": "https://github.com/DesignLiquido/lincones-sqlite/issues"
     },

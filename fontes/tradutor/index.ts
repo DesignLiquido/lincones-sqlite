@@ -26,8 +26,8 @@ export class TradutorSqLite extends TradutorSqlAnsi {
         if (tiposDeSimbolos.INTEIRO === coluna.tipo) {
             traduzir += `INTEGER `;
         } else if (tiposDeSimbolos.TEXTO === coluna.tipo) {
-            const simbolo = coluna.tamanho as Simbolo;
-            traduzir += `VARCHAR(${simbolo.literal}) `;
+            const simbolo = coluna.tamanho as Simbolo | undefined;
+            traduzir += simbolo ? `VARCHAR(${simbolo.literal}) ` : `TEXT `;
         } else if (tiposDeSimbolos.LOGICO === coluna.tipo)
             traduzir += 'BOOLEAN ';
         if (coluna.chavePrimaria) traduzir += 'PRIMARY KEY ';
