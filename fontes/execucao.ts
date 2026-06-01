@@ -1,9 +1,9 @@
 import * as leituraLinhas from 'readline';
 
-import { LinconesSQLite } from "./fontes/lincones-sqlite";
+import { LinconesSQLite } from "./lincones-sqlite";
 
 const lincones = new LinconesSQLite();
-lincones.clienteSQLite.abrir().then(() => {
+lincones.clienteSQLite?.abrir().then(() => {
     const interfaceLeitura = leituraLinhas.createInterface({
         input: process.stdin,
         output: process.stdout,
