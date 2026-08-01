@@ -1,14 +1,19 @@
 import * as caminho from 'node:path';
 
-import * as sqlite from 'sqlite';
-import sqlite3 from 'sqlite3';
+import Database from 'better-sqlite3';
+
+// better-sqlite3 rejeita booleans como parâmetro de bind; SQLite não tem
+// tipo booleano nativo, então convertemos para 0/1 antes de ligar o valor.
+function normalizarParametros(parametros: any[]): any[] {
+    return parametros.map((parametro) => (typeof parametro === 'boolean' ? (parametro ? 1 : 0) : parametro));
+}
 
 export class ClienteSQLite {
-    instanciaBancoDeDados: sqlite.Database;
+    instanciaBancoDeDados: Database.Database;
     readonly caminhoRaiz: string;
     origemDados: string;
 
-    // Segundo a documentação, o método new sqlite3.Database()
+    // Segundo a documentação, o método new Database()
     // pode receber 3 formas de filename
     // caminho do arquivo exemplo: /tmp/banco.db
     // ":memory:" para criar um banco de dados em memória
@@ -25,11 +30,7 @@ export class ClienteSQLite {
     }
 
     async abrir() {
-        const database = await sqlite.open({ 
-            filename: this.origemDados,
-            driver: sqlite3.Database
-        });
-        this.instanciaBancoDeDados = database;
+        this.instanciaBancoDeDados = new Database(this.origemDados);
         console.info('Conectado ao banco de dados SQLite.');
     }
 
@@ -38,15 +39,15 @@ export class ClienteSQLite {
             return await this.executarComandoSelecao(comando, parametros);
         }
 
-        return await this.instanciaBancoDeDados.run(comando, parametros);
-            // (erro: Error) => {
-            // if (erro) {
-            //     console.log(erro.message);
-            // }
-        // });
+        const resultado = this.instanciaBancoDeDados.prepare(comando).run(...normalizarParametros(parametros));
+        return {
+            changes: resultado.changes,
+            lastID: resultado.lastInsertRowid,
+            stmt: comando
+        };
     }
 
     private async executarComandoSelecao(comando: string, parametros: any[] = []): Promise<any> {
-        return await this.instanciaBancoDeDados.all(comando, parametros);
+        return this.instanciaBancoDeDados.prepare(comando).all(...normalizarParametros(parametros));
     }
 }

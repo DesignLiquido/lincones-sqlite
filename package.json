@@ -50,6 +50,7 @@
         "registry": "https://registry.npmjs.org/"
     },
     "devDependencies": {
+        "@types/better-sqlite3": "^7.6.12",
         "@types/jest": "^29.5.14",
         "@types/node": "^22.15.21",
         "@typescript-eslint/eslint-plugin": "^8.32.1",
@@ -64,8 +65,6 @@
         "typescript": "^5.8.3"
     },
     "dependencies": {
-        "@types/sqlite3": "^5.1.0",
-        "sqlite": "^5.1.1",
-        "sqlite3": "^5.1.7"
+        "better-sqlite3": "^11.8.1"
     }
 }
